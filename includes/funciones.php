@@ -1,76 +1,7 @@
 <?php
-// Funciones de ayuda que usan todas las páginas.
+// Funciones que se usan en varias páginas.
 
-// ---------- Base de datos ----------
-
-// Ejecuta una consulta. Los valores van aparte, en los "?", así se evita la inyección SQL.
-// Ejemplo: ejecutar("DELETE FROM favoritos WHERE usuario_id = ?", array($id));
-function ejecutar($sql, $valores = array())
-{
-    global $conexion;
-    $sentencia = mysqli_prepare($conexion, $sql);
-    if ($sentencia == false || !mysqli_stmt_execute($sentencia, $valores)) {
-        registrarError("Error en la consulta: " . mysqli_error($conexion));
-        mostrarError("El catálogo todavía no está listo", "Importa database.sql y usuarios.sql en phpMyAdmin.");
-    }
-    return $sentencia;
-}
-
-// Devuelve todas las filas de una consulta SELECT.
-function buscar($sql, $valores = array())
-{
-    $resultado = mysqli_stmt_get_result(ejecutar($sql, $valores));
-    return mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-}
-
-// Devuelve solo la primera fila (o null si no hay ninguna).
-function buscarUna($sql, $valores = array())
-{
-    $resultado = mysqli_stmt_get_result(ejecutar($sql, $valores));
-    return mysqli_fetch_assoc($resultado);
-}
-
-// Los id de las canciones favoritas de un usuario, por ejemplo [4, 11].
-function idsFavoritos($usuarioId)
-{
-    $filas = buscar("SELECT cancion_id FROM favoritos WHERE usuario_id = ? ORDER BY creado_en, cancion_id", array($usuarioId));
-    $ids = array();
-    foreach ($filas as $fila) {
-        $ids[] = (int) $fila["cancion_id"];
-    }
-    return $ids;
-}
-
-// ---------- Datos que llegan del usuario ----------
-
-// Lee un texto de $_GET o $_POST. Si no viene, devuelve "".
-function texto($datos, $nombre)
-{
-    if (isset($datos[$nombre]) && is_string($datos[$nombre])) {
-        return trim($datos[$nombre]);
-    }
-    return "";
-}
-
-// Lee un número entero positivo de $_GET o $_POST. Si no es válido, devuelve 0.
-function numero($datos, $nombre)
-{
-    $valor = texto($datos, $nombre);
-    if (ctype_digit($valor)) {
-        return (int) $valor;
-    }
-    return 0;
-}
-
-// ---------- Mostrar datos ----------
-
-// Texto seguro para el HTML (evita que alguien meta código en la página).
-function e($valor)
-{
-    return htmlspecialchars($valor, ENT_QUOTES, "UTF-8");
-}
-
-// 223 segundos -> "3:43".
+// Convierte los segundos a minutos. Ejemplo: 223 -> "3:43"
 function formatearDuracion($segundos)
 {
     $minutos = floor($segundos / 60);
@@ -81,55 +12,76 @@ function formatearDuracion($segundos)
     return $minutos . ":" . $resto;
 }
 
-// Enlaces para escuchar: Apple Music directo; Spotify y YouTube con una búsqueda.
-function enlacesEscuchar($cancion)
+// Texto para buscar la canción en Spotify o YouTube.
+// Se quita lo que va entre paréntesis, como "(Live)", y se deja solo el primer artista.
+function textoBusqueda($cancion)
 {
-    // Se corta el título donde empieza un paréntesis o corchete, como "(Live)", y se usa solo el primer artista.
     $titulo = $cancion["titulo"];
     $posicion = strpos($titulo, "(");
     if ($posicion !== false) {
         $titulo = substr($titulo, 0, $posicion);
     }
-    $posicion = strpos($titulo, "[");
-    if ($posicion !== false) {
-        $titulo = substr($titulo, 0, $posicion);
-    }
-    $titulo = trim($titulo);
     $artistas = explode(",", $cancion["artista"]);
-    $busqueda = $titulo . " " . trim($artistas[0]);
-
-    $enlaces = array();
-    $enlaces["Spotify"] = "https://open.spotify.com/search/" . rawurlencode($busqueda);
-    $enlaces["YouTube"] = "https://www.youtube.com/results?search_query=" . urlencode($busqueda);
-    if ($cancion["enlace_apple"] != "") {
-        $enlaces["Apple Music"] = $cancion["enlace_apple"];
-    }
-    return $enlaces;
+    return trim($titulo) . " " . trim($artistas[0]);
 }
 
-// Ilustración de cada género, por si la portada de internet no carga.
+function enlaceSpotify($cancion)
+{
+    return "https://open.spotify.com/search/" . rawurlencode(textoBusqueda($cancion));
+}
+
+function enlaceYoutube($cancion)
+{
+    return "https://www.youtube.com/results?search_query=" . urlencode(textoBusqueda($cancion));
+}
+
+// Agrega a una canción los datos que necesita JavaScript para mostrarla:
+// la duración "3:43", los enlaces para escuchar y el dibujo de respaldo.
+function prepararCancion($cancion)
+{
+    $cancion["duracion"] = formatearDuracion($cancion["duracion_segundos"]);
+    $cancion["spotify"] = enlaceSpotify($cancion);
+    $cancion["youtube"] = enlaceYoutube($cancion);
+    $cancion["respaldo"] = portadaRespaldo($cancion["genero_id"]);
+    return $cancion;
+}
+
+// Datos de la sesión para JavaScript: el nombre del usuario y los id de sus favoritos.
+// Si no hay sesión, el nombre va vacío.
+function datosSesion($conexion)
+{
+    $sesion = array();
+    $sesion["nombre"] = "";
+    $sesion["favoritos"] = array();
+
+    if (isset($_SESSION["usuario_id"])) {
+        $sesion["nombre"] = $_SESSION["usuario_nombre"];
+
+        $consulta = mysqli_prepare($conexion, "SELECT cancion_id FROM favoritos WHERE usuario_id = ?");
+        mysqli_stmt_bind_param($consulta, "i", $_SESSION["usuario_id"]);
+        mysqli_stmt_execute($consulta);
+        $resultado = mysqli_stmt_get_result($consulta);
+        while ($fila = mysqli_fetch_assoc($resultado)) {
+            $sesion["favoritos"][] = $fila["cancion_id"];
+        }
+    }
+    return $sesion;
+}
+
+// Dibujo de cada género, por si la portada de internet no carga.
 function portadaRespaldo($generoId)
 {
-    $ilustraciones = array(1 => "jazz", 2 => "indie", 3 => "lofi", 4 => "electronica", 5 => "rock");
-    if (isset($ilustraciones[$generoId])) {
-        return "assets/img/" . $ilustraciones[$generoId] . ".svg";
+    if ($generoId == 1) {
+        return "assets/img/jazz.svg";
+    }
+    if ($generoId == 3) {
+        return "assets/img/lofi.svg";
+    }
+    if ($generoId == 4) {
+        return "assets/img/electronica.svg";
+    }
+    if ($generoId == 5) {
+        return "assets/img/rock.svg";
     }
     return "assets/img/indie.svg";
-}
-
-// ---------- Respuestas y errores ----------
-
-// Responde en JSON y termina (lo usan api.php y favoritos.php).
-function responder($datos, $codigo = 200)
-{
-    http_response_code($codigo);
-    header("Content-Type: application/json; charset=utf-8");
-    echo json_encode($datos, JSON_UNESCAPED_UNICODE);
-    exit;
-}
-
-// Guarda un error en el archivo de errores de PHP (en XAMPP: C:\xampp\apache\logs\error.log).
-function registrarError($mensaje)
-{
-    error_log("[SoundShelf] " . $mensaje);
 }

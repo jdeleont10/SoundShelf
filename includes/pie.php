@@ -1,18 +1,24 @@
-<footer class="site-footer">
-    <div class="container footer-inner">
+<footer class="pie">
+    <div class="container d-md-flex justify-content-between">
         <div>
-            <a class="footer-brand" href="index.html">SoundShelf<span class="accent">.</span></a>
-            <p class="footer-note">Canciones, historias y nuevos sonidos.</p>
+            <p class="marca mb-1">SoundShelf<span class="lila">.</span></p>
+            <p class="texto-suave small">Canciones, historias y nuevos sonidos.</p>
         </div>
-        <p class="footer-note">Proyecto de Programación II<br>Música cristiana · Uso académico</p>
-        <nav class="footer-links" aria-label="Navegación del pie">
-            <a href="index.html">Inicio</a>
+        <p class="texto-suave small">Proyecto de Programación II<br>Música cristiana · Uso académico</p>
+        <p class="small">
+            <a href="index.html">Inicio</a> ·
             <a href="lista.html">Catálogo</a>
-            <?php if (usuarioActual()): ?><a href="mis-favoritos.php">Mis favoritos</a><?php endif; ?>
-        </nav>
+            <?php if (isset($_SESSION["usuario_id"])) { ?>
+                · <a href="mis-favoritos.php">Mis favoritos</a>
+            <?php } ?>
+        </p>
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="script.js?v=<?= filemtime(__DIR__ . '/../script.js') ?>" defer></script>
+
+<!-- Botón para volver arriba (aparece al bajar, lo controla script.js) -->
+<button type="button" id="boton-arriba" class="btn btn-lila" onclick="irArriba()">↑ Arriba</button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

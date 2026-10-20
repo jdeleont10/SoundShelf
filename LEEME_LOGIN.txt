@@ -4,7 +4,7 @@ INSTALACIÓN
 1. Importa database.sql y después usuarios.sql en phpMyAdmin.
    usuarios.sql crea las tablas usuarios y favoritos, y agrega datos de ejemplo.
    Se puede volver a importar: no borra ni duplica nada.
-2. Abre http://localhost/soundshelf/index.html
+2. Abre http://localhost/soundshelf/
 
 CUENTAS DE EJEMPLO (contraseña de todas: Ejemplo123!)
 - maria@ejemplo.test    María López
@@ -16,11 +16,11 @@ También puedes crear tu propia cuenta en registro.php.
 
 ACCESO
 - Sin sesión solo se ve el inicio; el catálogo, las fichas y Mis favoritos piden iniciar sesión.
-- Al iniciar sesión se vuelve a la página que se quería ver.
+- Al iniciar sesión se vuelve al inicio.
 
 FAVORITOS
 - Los favoritos se guardan en la tabla favoritos de MySQL (página Mis favoritos).
-- Para guardar favoritos hay que iniciar sesión.
+- Se agregan o quitan con el botón ♥ de cada canción.
 
 SEGURIDAD
 - Contraseñas cifradas con password_hash / password_verify.

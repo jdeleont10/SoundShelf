@@ -1,25 +1,37 @@
 <?php
-// Favoritos del usuario. JavaScript (script.js) llama a este archivo con fetch.
-//   POST accion=agregar&cancion=4   guarda una canción
-//   POST accion=quitar&cancion=4    la quita
-// Siempre responde con la lista actualizada, por ejemplo: {"favoritos": [1, 4]}
+// Agrega o quita una canción de favoritos.
+// Lo llama el botón ♥ de las tarjetas (un formulario que envía el id de la canción).
+session_start();
+include "includes/conexion.php";
 
-define("RESPUESTA_JSON", true); // si algo falla, iniciar.php responde en JSON
-require_once __DIR__ . "/includes/iniciar.php";
-
-$usuario = usuarioActual();
-if ($usuario == null) {
-    responder(array("error" => "Inicia sesión para guardar favoritos en tu cuenta."), 401);
+if (!isset($_SESSION["usuario_id"])) {
+    header("Location: login.php?aviso=1");
+    exit;
 }
 
-$accion = texto($_POST, "accion");
-$cancionId = numero($_POST, "cancion");
+$usuarioId = $_SESSION["usuario_id"];
+$cancionId = (int) $_POST["cancion"];
 
-if ($accion == "agregar") {
-    // INSERT IGNORE: si ya era favorita, no se repite.
-    ejecutar("INSERT IGNORE INTO favoritos (usuario_id, cancion_id) VALUES (?, ?)", array($usuario["id"], $cancionId));
-} else if ($accion == "quitar") {
-    ejecutar("DELETE FROM favoritos WHERE usuario_id = ? AND cancion_id = ?", array($usuario["id"], $cancionId));
+// ¿Ya era favorita?
+$consulta = mysqli_prepare($conexion, "SELECT * FROM favoritos WHERE usuario_id = ? AND cancion_id = ?");
+mysqli_stmt_bind_param($consulta, "ii", $usuarioId, $cancionId);
+mysqli_stmt_execute($consulta);
+$resultado = mysqli_stmt_get_result($consulta);
+
+if (mysqli_num_rows($resultado) > 0) {
+    // Sí: se quita.
+    $consulta = mysqli_prepare($conexion, "DELETE FROM favoritos WHERE usuario_id = ? AND cancion_id = ?");
+} else {
+    // No: se agrega.
+    $consulta = mysqli_prepare($conexion, "INSERT INTO favoritos (usuario_id, cancion_id) VALUES (?, ?)");
 }
+mysqli_stmt_bind_param($consulta, "ii", $usuarioId, $cancionId);
+mysqli_stmt_execute($consulta);
 
-responder(array("favoritos" => idsFavoritos($usuario["id"])));
+// Se vuelve a la página donde estaba el usuario.
+if (isset($_SERVER["HTTP_REFERER"])) {
+    header("Location: " . $_SERVER["HTTP_REFERER"]);
+} else {
+    header("Location: lista.html");
+}
+exit;

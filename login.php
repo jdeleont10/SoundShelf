@@ -1,76 +1,71 @@
 <?php
-// Inicio de sesión: busca el correo en la base de datos y compara la contraseña.
-require_once __DIR__ . "/includes/iniciar.php";
+// Iniciar sesión.
+session_start();
+include "includes/conexion.php";
 
-// Si ya hay sesión, no hace falta el formulario.
-if (usuarioActual() != null) {
-    header("Location: " . paginaDeRegreso());
+// Si ya inició sesión, no necesita este formulario.
+if (isset($_SESSION["usuario_id"])) {
+    header("Location: index.html");
     exit;
 }
 
 $error = "";
 $correo = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $correo = strtolower(texto($_POST, "correo"));
+// Cuando se envía el formulario.
+if (isset($_POST["correo"])) {
+    $correo = trim($_POST["correo"]);
     $clave = $_POST["clave"];
 
-    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        $error = "Ingresa un correo válido.";
+    // Buscar al usuario por su correo.
+    $consulta = mysqli_prepare($conexion, "SELECT * FROM usuarios WHERE correo = ?");
+    mysqli_stmt_bind_param($consulta, "s", $correo);
+    mysqli_stmt_execute($consulta);
+    $resultado = mysqli_stmt_get_result($consulta);
+    $usuario = mysqli_fetch_assoc($resultado);
+
+    // password_verify compara la contraseña escrita con la que está cifrada en la base de datos.
+    if ($usuario != null && password_verify($clave, $usuario["clave_hash"])) {
+        $_SESSION["usuario_id"] = $usuario["id"];
+        $_SESSION["usuario_nombre"] = $usuario["nombre"];
+        header("Location: index.html");
+        exit;
     } else {
-        $usuario = buscarUna("SELECT id, nombre, correo, clave_hash FROM usuarios WHERE correo = ?", array($correo));
-
-        // password_verify compara la contraseña escrita con la cifrada.
-        if ($usuario != null && password_verify($clave, $usuario["clave_hash"])) {
-            iniciarSesionUsuario($usuario);
-            header("Location: " . paginaDeRegreso());
-            exit;
-        }
-
-        // El mensaje no dice si falló el correo o la contraseña.
         $error = "Correo o contraseña incorrectos.";
     }
 }
 
-// Aviso que llega en la dirección (?aviso=...).
-$aviso = "";
-if (texto($_GET, "aviso") == "favoritos") {
-    $aviso = "Inicia sesión para ver tus favoritos.";
-}
-if (texto($_GET, "aviso") == "canciones") {
-    $aviso = "Inicia sesión para ver y escuchar las canciones.";
-}
-
-$tituloPagina = "Iniciar sesión";
-$pagina = "login";
-require __DIR__ . "/includes/encabezado.php";
+$titulo = "Iniciar sesión";
+include "includes/encabezado.php";
 ?>
-<main id="contenido" class="container py-5">
-    <section class="auth-panel shadow-lg mx-auto" aria-labelledby="titulo-auth">
-        <p class="eyebrow">BIENVENIDO DE NUEVO</p>
-        <h1 id="titulo-auth">Inicia sesión<span class="accent">.</span></h1>
-        <p class="muted">Accede con tu correo y contraseña.</p>
 
-        <?php if ($error): ?>
-            <div class="alert alert-danger" role="alert"><p><?= e($error) ?></p></div>
-        <?php elseif ($aviso): ?>
-            <div class="alert alert-info" role="status"><p><?= e($aviso) ?></p></div>
-        <?php endif; ?>
+<main class="container">
+    <div class="caja formulario">
+        <p class="subtitulo-chico">BIENVENIDO DE NUEVO</p>
+        <h1>Inicia sesión<span class="lila">.</span></h1>
+        <p class="texto-suave">Accede con tu correo y contraseña.</p>
 
-        <form method="post" class="auth-form needs-validation">
-            <label for="correo">Correo electrónico</label>
-            <input class="form-control form-control-lg" id="correo" type="email" name="correo" maxlength="190" required autocomplete="email" value="<?= e($correo) ?>">
+        <?php if ($error != "") { ?>
+            <div class="alert alert-danger"><?php echo $error; ?></div>
+        <?php } else if (isset($_GET["aviso"])) { ?>
+            <div class="alert alert-info">Inicia sesión para ver y escuchar las canciones.</div>
+        <?php } ?>
 
-            <label for="clave">Contraseña</label>
-            <div class="password-field input-group">
-                <input class="form-control form-control-lg" id="clave" type="password" name="clave" required autocomplete="current-password">
-                <button type="button" class="toggle-password btn btn-outline-light" data-target="clave" aria-label="Mostrar contraseña">Mostrar</button>
+        <form action="login.php" method="post">
+            <label for="correo" class="form-label">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" class="form-control mb-3" required value="<?php echo htmlspecialchars($correo); ?>">
+
+            <label for="clave" class="form-label">Contraseña</label>
+            <div class="input-group mb-3">
+                <input type="password" id="clave" name="clave" class="form-control" required>
+                <button type="button" id="boton-clave" class="btn btn-outline-light" onclick="mostrarClave()">Mostrar</button>
             </div>
 
-            <button class="btn btn-accent btn-lg w-100 mt-3" type="submit">Entrar ↗</button>
+            <button type="submit" class="btn btn-lila w-100">Entrar ↗</button>
         </form>
 
-        <p class="auth-switch text-center mt-4">¿No tienes una cuenta? <a href="registro.php<?= e(parametroRegreso()) ?>">Regístrate</a></p>
-    </section>
+        <p class="text-center mt-4 small">¿No tienes una cuenta? <a class="lila" href="registro.php">Regístrate</a></p>
+    </div>
 </main>
-<?php require __DIR__ . '/includes/pie.php'; ?>
+
+<?php include "includes/pie.php"; ?>

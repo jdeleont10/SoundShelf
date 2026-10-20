@@ -1,10 +1,11 @@
 <?php
-// Registro: revisa los datos, guarda el usuario con la contraseña cifrada y abre la sesión.
-require_once __DIR__ . "/includes/iniciar.php";
+// Crear una cuenta nueva.
+session_start();
+include "includes/conexion.php";
 
-// Si ya hay sesión, no hace falta el formulario.
-if (usuarioActual() != null) {
-    header("Location: " . paginaDeRegreso());
+// Si ya inició sesión, no necesita este formulario.
+if (isset($_SESSION["usuario_id"])) {
+    header("Location: index.html");
     exit;
 }
 
@@ -12,18 +13,16 @@ $errores = array();
 $nombre = "";
 $correo = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nombre = texto($_POST, "nombre");
-    $correo = strtolower(texto($_POST, "correo"));
+// Cuando se envía el formulario.
+if (isset($_POST["correo"])) {
+    $nombre = trim($_POST["nombre"]);
+    $correo = trim($_POST["correo"]);
     $clave = $_POST["clave"];
     $confirmacion = $_POST["confirmacion"];
 
-    // Validaciones (JavaScript también las revisa, pero el servidor siempre las vuelve a comprobar).
+    // Revisar los datos.
     if (strlen($nombre) < 2) {
         $errores[] = "Escribe tu nombre.";
-    }
-    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
-        $errores[] = "Ingresa un correo válido.";
     }
     if (strlen($clave) < 8) {
         $errores[] = "La contraseña debe tener al menos 8 caracteres.";
@@ -31,57 +30,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($clave != $confirmacion) {
         $errores[] = "Las contraseñas no coinciden.";
     }
-    if (count($errores) == 0 && buscarUna("SELECT id FROM usuarios WHERE correo = ?", array($correo)) != null) {
+
+    // ¿Ya hay alguien con ese correo?
+    $consulta = mysqli_prepare($conexion, "SELECT id FROM usuarios WHERE correo = ?");
+    mysqli_stmt_bind_param($consulta, "s", $correo);
+    mysqli_stmt_execute($consulta);
+    $resultado = mysqli_stmt_get_result($consulta);
+    if (mysqli_num_rows($resultado) > 0) {
         $errores[] = "Ese correo ya está registrado.";
     }
 
-    // Si todo está bien: se guarda con la contraseña cifrada y se abre la sesión.
+    // Si todo está bien, se guarda el usuario con la contraseña cifrada.
     if (count($errores) == 0) {
-        ejecutar("INSERT INTO usuarios (nombre, correo, clave_hash) VALUES (?, ?, ?)", array($nombre, $correo, password_hash($clave, PASSWORD_DEFAULT)));
-        iniciarSesionUsuario(array("id" => mysqli_insert_id($conexion), "nombre" => $nombre, "correo" => $correo));
-        header("Location: " . paginaDeRegreso());
+        $claveCifrada = password_hash($clave, PASSWORD_DEFAULT);
+        $consulta = mysqli_prepare($conexion, "INSERT INTO usuarios (nombre, correo, clave_hash) VALUES (?, ?, ?)");
+        mysqli_stmt_bind_param($consulta, "sss", $nombre, $correo, $claveCifrada);
+        mysqli_stmt_execute($consulta);
+
+        // Y se inicia la sesión con la cuenta nueva.
+        $_SESSION["usuario_id"] = mysqli_insert_id($conexion);
+        $_SESSION["usuario_nombre"] = $nombre;
+        header("Location: index.html");
         exit;
     }
 }
 
-$tituloPagina = "Crear cuenta";
-$pagina = "registro";
-require __DIR__ . "/includes/encabezado.php";
+$titulo = "Crear cuenta";
+include "includes/encabezado.php";
 ?>
-<main id="contenido" class="container py-5">
-    <section class="auth-panel shadow-lg mx-auto" aria-labelledby="titulo-auth">
-        <p class="eyebrow">ÚNETE A SOUNDSHELF</p>
-        <h1 id="titulo-auth">Crea tu cuenta<span class="accent">.</span></h1>
-        <p class="muted">Regístrate para tener una sesión personal en SoundShelf.</p>
 
-        <?php if ($errores): ?>
-            <div class="alert alert-danger" role="alert">
-                <?php foreach ($errores as $mensaje): ?>
-                    <p><?= e($mensaje) ?></p>
-                <?php endforeach; ?>
+<main class="container">
+    <div class="caja formulario">
+        <p class="subtitulo-chico">ÚNETE A SOUNDSHELF</p>
+        <h1>Crea tu cuenta<span class="lila">.</span></h1>
+        <p class="texto-suave">Regístrate para tener una sesión personal en SoundShelf.</p>
+
+        <?php if (count($errores) > 0) { ?>
+            <div class="alert alert-danger">
+                <?php
+                foreach ($errores as $error) {
+                    echo $error . "<br>";
+                }
+                ?>
             </div>
-        <?php endif; ?>
+        <?php } ?>
 
-        <form method="post" class="auth-form needs-validation">
-            <label for="nombre">Nombre</label>
-            <input class="form-control form-control-lg" id="nombre" name="nombre" maxlength="80" required autocomplete="name" value="<?= e($nombre) ?>">
+        <form action="registro.php" method="post">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" id="nombre" name="nombre" class="form-control mb-3" required value="<?php echo htmlspecialchars($nombre); ?>">
 
-            <label for="correo">Correo electrónico</label>
-            <input class="form-control form-control-lg" id="correo" type="email" name="correo" maxlength="190" required autocomplete="email" value="<?= e($correo) ?>">
+            <label for="correo" class="form-label">Correo electrónico</label>
+            <input type="email" id="correo" name="correo" class="form-control mb-3" required value="<?php echo htmlspecialchars($correo); ?>">
 
-            <label for="clave">Contraseña</label>
-            <div class="password-field input-group">
-                <input class="form-control form-control-lg" id="clave" type="password" name="clave" minlength="8" maxlength="72" required autocomplete="new-password">
-                <button type="button" class="toggle-password btn btn-outline-light" data-target="clave" aria-label="Mostrar contraseña">Mostrar</button>
+            <label for="clave" class="form-label">Contraseña</label>
+            <div class="input-group">
+                <input type="password" id="clave" name="clave" class="form-control" minlength="8" required oninput="revisarClave()">
+                <button type="button" id="boton-clave" class="btn btn-outline-light" onclick="mostrarClave()">Mostrar</button>
             </div>
+            <p id="nivel-clave" class="ayuda-clave mb-3"></p>
 
-            <label for="confirmacion">Confirmar contraseña</label>
-            <input class="form-control form-control-lg" id="confirmacion" type="password" name="confirmacion" minlength="8" maxlength="72" required autocomplete="new-password">
+            <label for="confirmacion" class="form-label">Confirmar contraseña</label>
+            <input type="password" id="confirmacion" name="confirmacion" class="form-control" minlength="8" required oninput="revisarClave()">
+            <p id="coincidencia-clave" class="ayuda-clave mb-3"></p>
 
-            <button class="btn btn-accent btn-lg w-100 mt-3" type="submit">Crear cuenta ↗</button>
+            <button type="submit" class="btn btn-lila w-100">Crear cuenta ↗</button>
         </form>
 
-        <p class="auth-switch text-center mt-4">¿Ya tienes cuenta? <a href="login.php<?= e(parametroRegreso()) ?>">Inicia sesión</a></p>
-    </section>
+        <p class="text-center mt-4 small">¿Ya tienes cuenta? <a class="lila" href="login.php">Inicia sesión</a></p>
+    </div>
 </main>
-<?php require __DIR__ . '/includes/pie.php'; ?>
+
+<?php include "includes/pie.php"; ?>

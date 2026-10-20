@@ -1,23 +1,36 @@
-<?php // La variable $cancion corresponde a una fila devuelta por MySQL. ?>
-<article class="track-card" data-id="<?= (int) $cancion['id'] ?>" data-busqueda="<?= e($cancion['titulo'] . ' ' . $cancion['artista']) ?>" data-genero="<?= (int) $cancion['genero_id'] ?>" data-titulo="<?= e($cancion['titulo']) ?>" data-anio="<?= (int) $cancion['anio'] ?>" data-puntuacion="<?= e($cancion['puntuacion']) ?>">
-    <a class="track-cover-link" href="detalle.html?id=<?= (int) $cancion['id'] ?>" aria-label="Ver ficha de <?= e($cancion['titulo']) ?>">
-        <div class="track-image">
-            <img src="<?= e($cancion['imagen']) ?>" alt="Portada de <?= e($cancion['album']) ?>" width="800" height="600" loading="lazy" data-respaldo="<?= e(portadaRespaldo((int) $cancion['genero_id'])) ?>">
+<?php
+// Tarjeta de una canción. Antes de incluirla, la página tiene que tener:
+//   $cancion       una fila de la tabla canciones (con el nombre del género en "genero")
+//   $misFavoritos  los id de las canciones favoritas del usuario
+?>
+<div class="col">
+    <div class="card tarjeta h-100">
+        <a href="detalle.html?id=<?php echo $cancion["id"]; ?>">
+            <img src="<?php echo $cancion["imagen"]; ?>" class="card-img-top" alt="Portada de <?php echo htmlspecialchars($cancion["album"]); ?>" onerror="this.src='<?php echo portadaRespaldo($cancion["genero_id"]); ?>'">
+        </a>
+        <div class="card-body">
+            <div class="d-flex justify-content-between mb-2">
+                <span class="badge etiqueta"><?php echo $cancion["genero"]; ?></span>
+                <span class="estrella">★ <?php echo $cancion["puntuacion"]; ?></span>
+            </div>
+            <h5 class="card-title"><a href="detalle.html?id=<?php echo $cancion["id"]; ?>"><?php echo htmlspecialchars($cancion["titulo"]); ?></a></h5>
+            <p class="artista mb-1"><?php echo htmlspecialchars($cancion["artista"]); ?></p>
+            <p class="texto-suave small"><?php echo htmlspecialchars($cancion["subtitulo"]); ?></p>
+
+            <!-- Botón de favoritos: envía el id de la canción a favoritos.php -->
+            <form action="favoritos.php" method="post" class="d-inline">
+                <input type="hidden" name="cancion" value="<?php echo $cancion["id"]; ?>">
+                <?php if (in_array($cancion["id"], $misFavoritos)) { ?>
+                    <button type="submit" class="btn btn-sm boton-favorito marcado">♥ Favorita</button>
+                <?php } else { ?>
+                    <button type="submit" class="btn btn-sm boton-favorito">♡ Favoritos</button>
+                <?php } ?>
+            </form>
+            <a class="btn btn-sm btn-spotify" href="<?php echo enlaceSpotify($cancion); ?>" target="_blank">▶ Escuchar</a>
         </div>
-    </a>
-    <div class="track-card-content">
-        <div class="track-card-topline">
-            <span class="pill pill-soft"><?= e($cancion['genero']) ?></span>
-            <span class="rating" aria-label="Puntuación <?= e($cancion['puntuacion']) ?> de 10"><span aria-hidden="true">★</span> <?= e($cancion['puntuacion']) ?></span>
-        </div>
-        <h3 class="track-title"><a href="detalle.html?id=<?= (int) $cancion['id'] ?>"><?= e($cancion['titulo']) ?></a></h3>
-        <p class="track-artist"><?= e($cancion['artista']) ?></p>
-        <p class="track-subtitle"><?= e($cancion['subtitulo']) ?></p>
-        <button type="button" class="favorite-button" data-favorito="<?= (int) $cancion['id'] ?>" aria-label="Añadir <?= e($cancion['titulo']) ?> a favoritos" aria-pressed="false">♡ Favoritos</button>
-        <a class="listen-card-link" href="<?= e(enlacesEscuchar($cancion)['Spotify']) ?>" target="_blank" rel="noopener noreferrer" aria-label="Escuchar <?= e($cancion['titulo']) ?> en Spotify"><span class="listen-icon" aria-hidden="true">▶</span>Escuchar</a>
-        <div class="track-card-bottom">
-            <span class="track-meta"><?= e(formatearDuracion($cancion['duracion_segundos'])) ?> <span aria-hidden="true">·</span> <?= (int) $cancion['anio'] ?></span>
-            <a class="text-link" href="detalle.html?id=<?= (int) $cancion['id'] ?>" aria-label="Ver detalle de <?= e($cancion['titulo']) ?>">Explorar <span aria-hidden="true">↗</span></a>
+        <div class="card-footer d-flex justify-content-between small">
+            <span class="texto-suave"><?php echo formatearDuracion($cancion["duracion_segundos"]); ?> · <?php echo $cancion["anio"]; ?></span>
+            <a class="lila" href="detalle.html?id=<?php echo $cancion["id"]; ?>">Explorar ↗</a>
         </div>
     </div>
-</article>
+</div>

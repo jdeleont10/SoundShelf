@@ -1,88 +1,122 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="SoundShelf: descubre un catálogo de canciones, explora sus géneros y consulta cada ficha.">
-    <title>Catálogo de canciones | SoundShelf</title>
+    <title>Catálogo | SoundShelf</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="estilos.css?v=20261019">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="estilos.css">
 </head>
-<body data-pagina="lista" data-sesion="0" data-favoritos="">
-<a class="skip-link" href="#contenido">Saltar al contenido</a>
-<header class="site-header sticky-top">
-    <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Navegación principal">
-        <div class="container">
-            <a class="navbar-brand brand" href="index.html" aria-label="SoundShelf, inicio">
-                <span class="brand-mark" aria-hidden="true">S<span>·</span></span>
-                <span><span class="brand-name">SoundShelf</span><span class="brand-caption">Música para descubrir</span></span>
-            </a>
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menú"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="menuPrincipal">
-                <div class="navbar-nav ms-lg-auto gap-lg-2 align-items-lg-center">
-                    <a class="nav-link" href="index.html">Inicio</a>
-                    <a class="nav-link active" href="lista.html" aria-current="page">Catálogo</a>
-                    <a class="nav-link" href="index.html#generos">Géneros</a>
-                    <a class="nav-link" href="mis-favoritos.php" data-solo-sesion hidden>Mis favoritos</a>
-                </div>
-                <!-- Los botones de sesión los agrega js/app.js según la respuesta de api.php -->
-                <div id="auth-links" class="auth-links d-flex flex-wrap align-items-center gap-2 ms-lg-4 mt-3 mt-lg-0"></div>
-            </div>
+<body>
+
+<!-- Barra que se llena al bajar por la página (la mueve script.js) -->
+<div id="barra-progreso"></div>
+
+<nav class="navbar navbar-expand-lg sticky-top menu">
+    <div class="container">
+        <a class="navbar-brand marca" href="index.html">SoundShelf<span class="lila">.</span></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                <li class="nav-item"><a class="nav-link" href="index.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="lista.html">Catálogo</a></li>
+                <li class="nav-item"><a class="nav-link" href="index.html#generos">Géneros</a></li>
+            </ul>
+            <!-- Aquí js/comun.js pone el saludo o los botones para entrar -->
+            <ul class="navbar-nav align-items-lg-center" id="menu-usuario"></ul>
         </div>
-    </nav>
-</header>
-<main id="contenido" class="container">
-    <nav class="breadcrumb" aria-label="Ruta de navegación"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span>Catálogo</span></nav>
-    <section class="page-heading" aria-labelledby="catalogo-titulo">
-        <p class="eyebrow">EXPLORA LA COLECCIÓN</p>
-        <h1 id="catalogo-titulo" class="page-title">Encuentra tu próximo <span class="accent">sonido.</span></h1>
-        <p class="page-description">Busca una canción o un artista, elige tu género y descubre la colección.</p>
+    </div>
+</nav>
+
+<main class="container">
+    <p class="migas"><a href="index.html">Inicio</a> / Catálogo</p>
+
+    <section class="seccion-chica">
+        <p class="subtitulo-chico">EXPLORA LA COLECCIÓN</p>
+        <h1>Encuentra tu próximo <span class="lila">sonido.</span></h1>
+        <p class="texto-suave">Busca una canción o un artista, elige tu género y descubre la colección.</p>
     </section>
 
-    <section class="section-block" aria-label="Búsqueda y filtros">
-        <form class="filter-form" action="lista.html" method="get" role="search">
-            <div class="form-field"><label for="q">Canción o artista</label><input type="search" id="q" name="q" placeholder="Por ejemplo: Montesanto" autocomplete="off"></div>
-            <div class="form-field"><label for="genero">Género</label><select id="genero" name="genero"><option value="0">Todos los géneros</option></select></div>
-            <div class="form-actions"><button class="button button-primary btn btn-accent" type="submit">Buscar <span aria-hidden="true">↗</span></button><a class="button button-secondary btn btn-outline-light" href="lista.html">Limpiar</a></div>
-        </form>
-        <p class="js-hint">Los resultados se filtran mientras escribes. El botón Buscar también permite compartir tus filtros mediante la URL.</p>
-    </section>
+    <!-- Formulario de búsqueda: al enviarlo, la página se vuelve a abrir con los filtros en la dirección -->
+    <form action="lista.html" method="get" class="caja row g-3 align-items-end mx-0">
+        <div class="col-md-5">
+            <label for="q" class="form-label">Canción o artista</label>
+            <input type="text" id="q" name="q" class="form-control" placeholder="Por ejemplo: Montesanto">
+        </div>
+        <div class="col-md-3">
+            <label for="genero" class="form-label">Género</label>
+            <select id="genero" name="genero" class="form-select">
+                <option value="0">Todos los géneros</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label for="orden" class="form-label">Ordenar por</label>
+            <select id="orden" name="orden" class="form-select">
+                <option value="titulo">Título (A-Z)</option>
+                <option value="puntuacion">Mejor puntuación</option>
+                <option value="anio">Más recientes</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-lila w-100">Buscar ↗</button>
+            <a href="lista.html" class="btn btn-outline-light w-100 mt-2">Limpiar</a>
+        </div>
+    </form>
 
-    <section class="section-block" aria-labelledby="resultados-titulo">
-        <div class="section-heading"><h2 id="resultados-titulo" class="section-title">Sonidos para descubrir</h2><p class="results-summary">Cargando…</p></div>
-        <!-- Las tarjetas se cargan desde MySQL -->
+    <!-- Resultados (los pone js/lista.js) -->
+    <section class="seccion">
+        <h2>Sonidos para descubrir</h2>
+        <p class="texto-suave" id="cantidad">Cargando…</p>
         <div id="resultados"></div>
     </section>
 
-    <section id="seccion-tabla" class="section-block" aria-labelledby="tabla-titulo" hidden>
-        <div class="section-heading"><div><p class="eyebrow">TODOS LOS DATOS, DE UN VISTAZO</p><h2 id="tabla-titulo" class="section-title">Compara y elige</h2><p class="section-description">La tabla muestra los mismos resultados de tu búsqueda.</p></div></div>
-        <div class="table-wrap table-responsive" tabindex="0" role="region" aria-label="Tabla de canciones; desplázate horizontalmente en pantallas pequeñas">
-            <table id="tabla-canciones" class="table table-dark table-hover align-middle">
-                <caption class="sr-only">Canciones encontradas y sus características</caption>
-                <thead><tr><th scope="col">Canción / artista</th><th scope="col">Género</th><th scope="col">Álbum</th><th scope="col">Duración</th><th scope="col">Año</th><th scope="col">Puntuación</th><th scope="col">Ficha</th></tr></thead>
-                <!-- Las filas se cargan desde MySQL -->
-                <tbody></tbody>
+    <!-- Tabla con los mismos resultados -->
+    <section class="seccion" id="seccion-tabla">
+        <p class="subtitulo-chico">TODOS LOS DATOS, DE UN VISTAZO</p>
+        <h2>Compara y elige</h2>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Canción / artista</th>
+                        <th>Género</th>
+                        <th>Álbum</th>
+                        <th>Duración</th>
+                        <th>Año</th>
+                        <th>Puntuación</th>
+                        <th>Ficha</th>
+                    </tr>
+                </thead>
+                <tbody id="filas-tabla"></tbody>
             </table>
         </div>
     </section>
 </main>
-<footer class="site-footer">
-    <div class="container footer-inner">
+
+<footer class="pie">
+    <div class="container d-md-flex justify-content-between">
         <div>
-            <a class="footer-brand" href="index.html">SoundShelf<span class="accent">.</span></a>
-            <p class="footer-note">Canciones, historias y nuevos sonidos.</p>
+            <p class="marca mb-1">SoundShelf<span class="lila">.</span></p>
+            <p class="texto-suave small">Canciones, historias y nuevos sonidos.</p>
         </div>
-        <p class="footer-note">Proyecto de Programación II<br>Música cristiana · Uso académico</p>
-        <nav class="footer-links" aria-label="Navegación del pie">
-            <a href="index.html">Inicio</a>
-            <a href="lista.html">Catálogo</a>
-            <a href="mis-favoritos.php" data-solo-sesion hidden>Mis favoritos</a>
-        </nav>
+        <p class="texto-suave small">Proyecto de Programación II<br>Música cristiana · Uso académico</p>
+        <p class="small">
+            <a href="index.html">Inicio</a> ·
+            <a href="lista.html">Catálogo</a> ·
+            <a href="mis-favoritos.php">Mis favoritos</a>
+        </p>
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script src="script.js?v=20261019" defer></script>
-<script src="js/app.js?v=20261019" defer></script>
+
+<!-- Botón para volver arriba (aparece al bajar, lo controla script.js) -->
+<button type="button" id="boton-arriba" class="btn btn-lila" onclick="irArriba()">↑ Arriba</button>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+<script src="js/comun.js"></script>
+<script src="js/lista.js"></script>
 </body>
 </html>

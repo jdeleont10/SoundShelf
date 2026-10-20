@@ -4,18 +4,26 @@ INSTALACIÓN
 1. Copia la carpeta soundshelf a C:\xampp\htdocs\
 2. Inicia Apache y MySQL en XAMPP.
 3. En http://localhost/phpmyadmin importa primero database.sql y después usuarios.sql.
-4. Abre http://localhost/soundshelf/index.html (no abras los archivos con doble clic).
+4. Abre http://localhost/soundshelf/ (no abras los archivos con doble clic).
 
 CONEXIÓN A MYSQL
 includes/conexion.php usa el puerto 3308, porque en esta computadora el 3306 lo ocupa otro MySQL.
 En otra computadora con XAMPP normal, cambia 3308 por 3306.
 
 CÓMO FUNCIONA
-- index.html, lista.html y detalle.html son las páginas principales (HTML5).
-- js/app.js pide los datos a api.php con fetch(); api.php consulta MySQL y responde en JSON.
-- script.js agrega los efectos: favoritos, filtro en vivo, ordenar, animaciones, etc.
-- login.php, registro.php, mis-favoritos.php y salir.php son PHP porque procesan formularios.
-- favoritos.php guarda y quita favoritos de la cuenta del usuario.
+- Páginas principales en HTML5. Su JavaScript pide los datos con fetch() a un archivo
+  PHP de la carpeta api/, que consulta MySQL y responde en JSON:
+  index.html     inicio, cifras, destacadas y géneros    js/inicio.js  -> api/inicio.php
+  lista.html     catálogo: búsqueda, género y orden       js/lista.js   -> api/lista.php
+  detalle.html   ficha de una canción (detalle.html?id=1) js/detalle.js -> api/detalle.php
+  js/comun.js tiene lo que comparten: el menú y la tarjeta de canción.
+- Páginas PHP (procesan formularios o necesitan la sesión):
+  login.php, registro.php, salir.php, mis-favoritos.php
+  favoritos.php  agrega o quita una canción de favoritos (lo llama el botón ♥)
+- includes/: conexión, funciones, encabezado, pie de página y la tarjeta de canción.
+- estilos.css: colores propios; el resto del diseño es de Bootstrap (tema oscuro).
+- script.js: efectos con JavaScript (saludo por hora, barra de progreso, botón Arriba,
+  mostrar contraseña, nivel de contraseña y copiar enlace).
 
 BASE DE DATOS (soundshelf)
 - generos (5) -> canciones (20): un género tiene muchas canciones.
