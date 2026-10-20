@@ -25,7 +25,7 @@ function preparar($canciones)
 
 // Datos de la sesión: van en todas las respuestas.
 $usuario = usuarioActual();
-$sesion = array("usuario" => null, "csrf" => tokenCsrf(), "favoritos" => array());
+$sesion = array("usuario" => null, "favoritos" => array());
 if ($usuario != null) {
     $sesion["usuario"] = array("nombre" => $usuario["nombre"]);
     $sesion["favoritos"] = idsFavoritos($usuario["id"]);

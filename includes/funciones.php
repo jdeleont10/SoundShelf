@@ -67,7 +67,7 @@ function numero($datos, $nombre)
 // Texto seguro para el HTML (evita que alguien meta código en la página).
 function e($valor)
 {
-    return htmlspecialchars((string) $valor, ENT_QUOTES | ENT_SUBSTITUTE, "UTF-8");
+    return htmlspecialchars($valor, ENT_QUOTES, "UTF-8");
 }
 
 // 223 segundos -> "3:43".
@@ -84,8 +84,17 @@ function formatearDuracion($segundos)
 // Enlaces para escuchar: Apple Music directo; Spotify y YouTube con una búsqueda.
 function enlacesEscuchar($cancion)
 {
-    // Se quita lo que va entre paréntesis o corchetes, como "(Live)", y se usa solo el primer artista.
-    $titulo = trim(preg_replace('/\s*[\(\[].*?[\)\]]/', '', $cancion["titulo"]));
+    // Se corta el título donde empieza un paréntesis o corchete, como "(Live)", y se usa solo el primer artista.
+    $titulo = $cancion["titulo"];
+    $posicion = strpos($titulo, "(");
+    if ($posicion !== false) {
+        $titulo = substr($titulo, 0, $posicion);
+    }
+    $posicion = strpos($titulo, "[");
+    if ($posicion !== false) {
+        $titulo = substr($titulo, 0, $posicion);
+    }
+    $titulo = trim($titulo);
     $artistas = explode(",", $cancion["artista"]);
     $busqueda = $titulo . " " . trim($artistas[0]);
 

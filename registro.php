@@ -15,28 +15,18 @@ $correo = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = texto($_POST, "nombre");
     $correo = strtolower(texto($_POST, "correo"));
-    // Las contraseñas se leen tal cual (sin quitar espacios).
-    $clave = "";
-    $confirmacion = "";
-    if (isset($_POST["clave"]) && is_string($_POST["clave"])) {
-        $clave = $_POST["clave"];
-    }
-    if (isset($_POST["confirmacion"]) && is_string($_POST["confirmacion"])) {
-        $confirmacion = $_POST["confirmacion"];
-    }
+    $clave = $_POST["clave"];
+    $confirmacion = $_POST["confirmacion"];
 
     // Validaciones (JavaScript también las revisa, pero el servidor siempre las vuelve a comprobar).
-    if (!verificarCsrf()) {
-        $errores[] = "Solicitud inválida. Recarga la página.";
+    if (strlen($nombre) < 2) {
+        $errores[] = "Escribe tu nombre.";
     }
-    if (mb_strlen($nombre) < 2 || mb_strlen($nombre) > 80) {
-        $errores[] = "El nombre debe tener entre 2 y 80 caracteres.";
-    }
-    if (strlen($correo) > 190 || !filter_var($correo, FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($correo, FILTER_VALIDATE_EMAIL)) {
         $errores[] = "Ingresa un correo válido.";
     }
-    if (strlen($clave) < 8 || strlen($clave) > 72) {
-        $errores[] = "La contraseña debe tener entre 8 y 72 caracteres.";
+    if (strlen($clave) < 8) {
+        $errores[] = "La contraseña debe tener al menos 8 caracteres.";
     }
     if ($clave != $confirmacion) {
         $errores[] = "Las contraseñas no coinciden.";
@@ -73,8 +63,6 @@ require __DIR__ . "/includes/encabezado.php";
         <?php endif; ?>
 
         <form method="post" class="auth-form needs-validation">
-            <input type="hidden" name="csrf" value="<?= e(tokenCsrf()) ?>">
-
             <label for="nombre">Nombre</label>
             <input class="form-control form-control-lg" id="nombre" name="nombre" maxlength="80" required autocomplete="name" value="<?= e($nombre) ?>">
 

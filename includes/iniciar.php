@@ -1,14 +1,9 @@
 <?php
 // Archivo que cargan todas las páginas PHP al empezar:
-// conexión a MySQL, funciones, sesión y cabeceras de seguridad.
+// conexión a MySQL, funciones y sesión.
 require_once __DIR__ . "/conexion.php";
 require_once __DIR__ . "/funciones.php";
 require_once __DIR__ . "/autenticacion.php";
-
-// Cabeceras de seguridad.
-header("X-Frame-Options: SAMEORIGIN");      // otros sitios no pueden mostrar SoundShelf dentro de un marco
-header("X-Content-Type-Options: nosniff");  // el navegador respeta el tipo de cada archivo
-header("Referrer-Policy: same-origin");     // la dirección de la página no se envía a otros sitios
 
 // Muestra un mensaje de error y termina.
 // api.php y favoritos.php definen RESPUESTA_JSON: para ellos el error se manda en JSON.
@@ -30,8 +25,8 @@ function mostrarError($titulo, $mensaje, $codigo = 503)
             <h1 id="error-titulo"><?= e($titulo) ?></h1>
             <p class="muted"><?= e($mensaje) ?></p>
             <div class="error-actions">
-                <a class="button button-primary" href="lista.html">Ir al catálogo</a>
-                <a class="button button-secondary" href="index.html">Volver al inicio</a>
+                <a class="button button-primary btn btn-accent" href="lista.html">Ir al catálogo</a>
+                <a class="button button-secondary btn btn-outline-light" href="index.html">Volver al inicio</a>
             </div>
         </section>
     </main>

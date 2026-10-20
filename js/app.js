@@ -90,23 +90,11 @@ function aplicarSesion(sesion) {
     }
     document.body.dataset.favoritos = sesion.favoritos.join(",");
 
-    // Token CSRF para los formularios y para favoritos.php.
-    let meta = document.querySelector('meta[name="csrf-token"]');
-    if (!meta) {
-        meta = document.createElement("meta");
-        meta.name = "csrf-token";
-        document.head.appendChild(meta);
-    }
-    meta.content = sesion.csrf;
-
     // Botones del menú.
     let html = "";
     if (sesion.usuario) {
         html += '<span class="auth-greeting me-2">Hola, ' + e(sesion.usuario.nombre) + '</span>';
-        html += '<form action="salir.php" method="post" class="m-0">';
-        html += '<input type="hidden" name="csrf" value="' + e(sesion.csrf) + '">';
-        html += '<button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3">Cerrar sesión</button>';
-        html += '</form>';
+        html += '<a class="btn btn-outline-light btn-sm rounded-pill px-3" href="salir.php">Cerrar sesión</a>';
     } else {
         html += '<a class="btn btn-outline-light btn-sm rounded-pill px-3" href="login.php">Iniciar sesión</a>';
         html += '<a class="btn btn-accent btn-sm rounded-pill px-3" href="registro.php">Crear cuenta</a>';
@@ -252,11 +240,16 @@ function mostrarLista(datos) {
     // Se rellena el formulario con lo que viene en la dirección.
     document.getElementById("q").value = leerDireccion("q");
     const generoElegido = Number(leerDireccion("genero"));
-    const selector = document.getElementById("genero");
+    let opciones = '<option value="0">Todos los géneros</option>';
     for (let i = 0; i < datos.generos.length; i++) {
         const g = datos.generos[i];
-        selector.add(new Option(g.nombre, g.id, false, Number(g.id) == generoElegido));
+        let marcado = "";
+        if (Number(g.id) == generoElegido) {
+            marcado = " selected";
+        }
+        opciones += '<option value="' + g.id + '"' + marcado + '>' + e(g.nombre) + '</option>';
     }
+    document.getElementById("genero").innerHTML = opciones;
 
     const canciones = datos.canciones;
     const total = canciones.length;

@@ -21,7 +21,6 @@ if (usuarioActual() != null && isset($conexion) && $conexion) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="SoundShelf: descubre un catálogo de canciones, explora sus géneros y consulta cada ficha.">
-    <meta name="csrf-token" content="<?= e(tokenCsrf()) ?>">
     <title><?= e($tituloPagina) ?> | SoundShelf</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -47,7 +46,7 @@ if (usuarioActual() != null && isset($conexion) && $conexion) {
                 <div class="auth-links d-flex flex-wrap align-items-center gap-2 ms-lg-4 mt-3 mt-lg-0">
                     <?php if (usuarioActual()): ?>
                         <span class="auth-greeting me-2">Hola, <?= e(usuarioActual()['nombre']) ?></span>
-                        <form action="salir.php" method="post" class="m-0"><input type="hidden" name="csrf" value="<?= e(tokenCsrf()) ?>"><button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3">Cerrar sesión</button></form>
+                        <a class="btn btn-outline-light btn-sm rounded-pill px-3" href="salir.php">Cerrar sesión</a>
                     <?php else: ?>
                         <a class="btn btn-outline-light btn-sm rounded-pill px-3" href="login.php">Iniciar sesión</a>
                         <a class="btn btn-accent btn-sm rounded-pill px-3" href="registro.php">Crear cuenta</a>
