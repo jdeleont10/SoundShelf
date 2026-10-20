@@ -1,0 +1,26 @@
+SoundShelf + Bootstrap 5.3.3 - Catálogo de música cristiana
+
+INSTALACIÓN
+1. Copia la carpeta soundshelf a C:\xampp\htdocs\
+2. Inicia Apache y MySQL en XAMPP.
+3. En http://localhost/phpmyadmin importa primero database.sql y después usuarios.sql.
+4. Abre http://localhost/soundshelf/index.html (no abras los archivos con doble clic).
+
+CONEXIÓN A MYSQL
+includes/conexion.php usa el puerto 3308, porque en esta computadora el 3306 lo ocupa otro MySQL.
+En otra computadora con XAMPP normal, cambia 3308 por 3306.
+
+CÓMO FUNCIONA
+- index.html, lista.html y detalle.html son las páginas principales (HTML5).
+- js/app.js pide los datos a api.php con fetch(); api.php consulta MySQL y responde en JSON.
+- script.js agrega los efectos: favoritos, filtro en vivo, ordenar, animaciones, etc.
+- login.php, registro.php, mis-favoritos.php y salir.php son PHP porque procesan formularios.
+- favoritos.php guarda y quita favoritos de la cuenta del usuario.
+
+BASE DE DATOS (soundshelf)
+- generos (5) -> canciones (20): un género tiene muchas canciones.
+- usuarios <-> canciones a través de favoritos: muchos a muchos.
+
+REQUIERE INTERNET
+Bootstrap y las portadas de los álbumes se cargan desde internet.
+Si una portada no carga, se muestra una ilustración del género (assets/img).

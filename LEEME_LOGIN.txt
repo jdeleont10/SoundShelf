@@ -1,0 +1,30 @@
+LOGIN Y FAVORITOS DE SOUNDSHELF
+
+INSTALACIÓN
+1. Importa database.sql y después usuarios.sql en phpMyAdmin.
+   usuarios.sql crea las tablas usuarios y favoritos, y agrega datos de ejemplo.
+   Se puede volver a importar: no borra ni duplica nada.
+2. Abre http://localhost/soundshelf/index.html
+
+CUENTAS DE EJEMPLO (contraseña de todas: Ejemplo123!)
+- maria@ejemplo.test    María López
+- carlos@ejemplo.test   Carlos Pérez
+- ana@ejemplo.test      Ana Gómez
+- luis@ejemplo.test     Luis Martínez
+- sofia@ejemplo.test    Sofía Ramírez
+También puedes crear tu propia cuenta en registro.php.
+
+ACCESO
+- Sin sesión solo se ve el inicio; el catálogo, las fichas y Mis favoritos piden iniciar sesión.
+- Al iniciar sesión se vuelve a la página que se quería ver.
+
+FAVORITOS
+- Con sesión, los favoritos se guardan en la tabla favoritos de MySQL (página Mis favoritos).
+- Sin sesión se guardan en el navegador y pasan a la cuenta al iniciar sesión.
+
+SEGURIDAD
+- Contraseñas cifradas con password_hash / password_verify.
+- Consultas preparadas con PDO (evita inyección SQL).
+- Token CSRF en los formularios, cookie de sesión HttpOnly y nuevo id de sesión al entrar y salir.
+- Para publicarlo en internet faltaría: HTTPS, un usuario de MySQL con contraseña,
+  límite de intentos de login y recuperación de contraseña.

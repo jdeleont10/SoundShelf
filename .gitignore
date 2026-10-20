@@ -1,0 +1,19 @@
+# Paquetes de entrega generados
+*.zip
+
+# Configuración local / secretos
+.env
+.env.*
+
+# Logs
+*.log
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp

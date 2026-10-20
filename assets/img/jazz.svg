@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#524443"/><stop offset="1" stop-color="#2b323a"/></linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fae4b3"/><stop offset=".5" stop-color="#d1a867"/><stop offset="1" stop-color="#a57051"/></linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <circle cx="412" cy="267" r="218" fill="#edcf9d"/>
+  <path d="M800 0 402 600h398Z" fill="#bb7f67" opacity=".55"/>
+  <path d="M0 600V176l278 424Z" fill="#8b6970"/>
+  <path d="m126 472 117-37 135 165H197Z" fill="#a98276"/>
+  <path d="M624 79h37v161h-37Z" fill="#b19078"/>
+  <path d="M153 83h70v14h-70Zm16 23h70v14h-70Zm16 23h70v14h-70Z" fill="#ceb58e"/>
+  <g transform="rotate(-13 405 316)">
+    <path d="M327 126c73-9 101 25 94 82l-19 211c-4 43 34 64 69 43l14-18" fill="none" stroke="#a67454" stroke-width="60" stroke-linejoin="round"/>
+    <path d="M324 119c73-9 101 25 94 82l-19 211c-4 43 34 64 69 43l14-18" fill="none" stroke="url(#gold)" stroke-width="49" stroke-linejoin="round"/>
+    <path d="m455 446 36-110 34 2 25 146Z" fill="url(#gold)"/>
+    <ellipse cx="508" cy="338" rx="45" ry="21" fill="#a77450"/>
+    <ellipse cx="508" cy="338" rx="33" ry="13" fill="#42383c"/>
+    <path d="M314 111h40v24h-40Z" fill="#35323b"/>
+    <path d="M354 117h11" stroke="#e7c994" stroke-width="10"/>
+    <path d="m412 228-18 166" fill="none" stroke="#f3d7a3" stroke-width="6"/>
+    <g fill="#b8865e" stroke="#f0d4a4" stroke-width="3"><circle cx="420" cy="243" r="9"/><circle cx="416" cy="273" r="9"/><circle cx="413" cy="303" r="9"/><circle cx="410" cy="333" r="9"/><circle cx="407" cy="363" r="9"/><circle cx="404" cy="393" r="9"/></g>
+    <path d="M403 441c14 17 26 19 43 14" fill="none" stroke="#fae2ae" stroke-width="4"/>
+  </g>
+  <g fill="#d8b68b"><ellipse cx="620" cy="299" rx="12" ry="8" transform="rotate(-23 620 299)"/><ellipse cx="657" cy="276" rx="12" ry="8" transform="rotate(-23 657 276)"/><path d="M628 295v-55l37-20v53h-5v-45l-27 15v50Z"/></g>
+  <g stroke="#f2d0a4" stroke-width="2" fill="none"><path d="M199 321h22m-11-11v22M597 487h23m-12-11v22"/></g>
+  <circle cx="579" cy="139" r="7" fill="#d6ae80"/>
+  <circle cx="185" cy="241" r="5" fill="#e6c296"/>
+</svg>
