@@ -61,7 +61,7 @@ function mostrarFicha(datos) {
     html += '<div class="col-lg-6">';
     html += '<p class="subtitulo-chico">DETRÁS DE CADA MELODÍA</p>';
     html += '<a class="badge etiqueta" href="' + enlaceGenero + '">' + c.genero + '</a>';
-    html += '<span class="estrella ms-2">★ ' + c.puntuacion + ' / 10</span>';
+    html += '<span class="estrella ms-2">' + c.puntuacion + ' / 10</span>';
     html += '<h1 class="titulo-grande mt-3">' + c.titulo + '</h1>';
     html += '<p class="texto-suave">' + c.subtitulo + '</p>';
     html += '<p class="small">' + c.artista + ' · ' + c.anio + '</p>';
@@ -70,21 +70,21 @@ function mostrarFicha(datos) {
     html += '<form action="favoritos.php" method="post" class="mb-3">';
     html += '<input type="hidden" name="cancion" value="' + c.id + '">';
     if (esFavorita) {
-        html += '<button type="submit" class="btn boton-favorito marcado">♥ Favorita</button>';
+        html += '<button type="submit" class="btn boton-favorito marcado">Favorita</button>';
     } else {
-        html += '<button type="submit" class="btn boton-favorito">♡ Favoritos</button>';
+        html += '<button type="submit" class="btn boton-favorito">Favoritos</button>';
     }
     html += '</form>';
 
-    html += '<a class="btn btn-lila mb-2 me-1" href="' + enlaceGenero + '">Más de ' + c.genero + ' ↗</a>';
+    html += '<a class="btn btn-lila mb-2 me-1" href="' + enlaceGenero + '">Más de ' + c.genero + '</a>';
     html += '<a class="btn btn-outline-light mb-2 me-1" href="lista.html">Volver al catálogo</a>';
     html += '<button type="button" id="boton-copiar" class="btn btn-outline-light mb-2" onclick="copiarEnlace()">Copiar enlace</button>';
 
     html += '<p class="subtitulo-chico mt-4">ESCÚCHALA EN</p>';
-    html += '<a class="btn btn-spotify mb-2 me-1" href="' + c.spotify + '" target="_blank">▶ Spotify</a>';
-    html += '<a class="btn btn-youtube mb-2 me-1" href="' + c.youtube + '" target="_blank">▶ YouTube</a>';
+    html += '<a class="btn btn-spotify mb-2 me-1" href="' + c.spotify + '" target="_blank">Spotify</a>';
+    html += '<a class="btn btn-youtube mb-2 me-1" href="' + c.youtube + '" target="_blank">YouTube</a>';
     if (c.enlace_apple != "") {
-        html += '<a class="btn btn-apple mb-2" href="' + c.enlace_apple + '" target="_blank">▶ Apple Music</a>';
+        html += '<a class="btn btn-apple mb-2" href="' + c.enlace_apple + '" target="_blank">Apple Music</a>';
     }
     html += '</div>';
     html += '<div class="col-lg-6 mt-4 mt-lg-0">';

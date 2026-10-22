@@ -1,6 +1,6 @@
 <?php
 // Agrega o quita una canción de favoritos.
-// Lo llama el botón ♥ de las tarjetas (un formulario que envía el id de la canción).
+// Lo llama el botón Favoritos de las tarjetas (un formulario que envía el id de la canción).
 session_start();
 include "includes/conexion.php";
 

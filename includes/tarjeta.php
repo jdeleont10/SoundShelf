@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="d-flex justify-content-between mb-2">
                 <span class="badge etiqueta"><?php echo $cancion["genero"]; ?></span>
-                <span class="estrella">★ <?php echo $cancion["puntuacion"]; ?></span>
+                <span class="estrella"><?php echo $cancion["puntuacion"]; ?> / 10</span>
             </div>
             <h5 class="card-title"><a href="detalle.html?id=<?php echo $cancion["id"]; ?>"><?php echo htmlspecialchars($cancion["titulo"]); ?></a></h5>
             <p class="artista mb-1"><?php echo htmlspecialchars($cancion["artista"]); ?></p>
@@ -21,16 +21,16 @@
             <form action="favoritos.php" method="post" class="d-inline">
                 <input type="hidden" name="cancion" value="<?php echo $cancion["id"]; ?>">
                 <?php if (in_array($cancion["id"], $misFavoritos)) { ?>
-                    <button type="submit" class="btn btn-sm boton-favorito marcado">♥ Favorita</button>
+                    <button type="submit" class="btn btn-sm boton-favorito marcado">Favorita</button>
                 <?php } else { ?>
-                    <button type="submit" class="btn btn-sm boton-favorito">♡ Favoritos</button>
+                    <button type="submit" class="btn btn-sm boton-favorito">Favoritos</button>
                 <?php } ?>
             </form>
-            <a class="btn btn-sm btn-spotify" href="<?php echo enlaceSpotify($cancion); ?>" target="_blank">▶ Escuchar</a>
+            <a class="btn btn-sm btn-spotify" href="<?php echo enlaceSpotify($cancion); ?>" target="_blank">Escuchar</a>
         </div>
         <div class="card-footer d-flex justify-content-between small">
             <span class="texto-suave"><?php echo formatearDuracion($cancion["duracion_segundos"]); ?> · <?php echo $cancion["anio"]; ?></span>
-            <a class="lila" href="detalle.html?id=<?php echo $cancion["id"]; ?>">Explorar ↗</a>
+            <a class="lila" href="detalle.html?id=<?php echo $cancion["id"]; ?>">Explorar</a>
         </div>
     </div>
 </div>

@@ -61,7 +61,7 @@ include "includes/encabezado.php";
                 <button type="button" id="boton-clave" class="btn btn-outline-light" onclick="mostrarClave()">Mostrar</button>
             </div>
 
-            <button type="submit" class="btn btn-lila w-100">Entrar ↗</button>
+            <button type="submit" class="btn btn-lila w-100">Entrar</button>
         </form>
 
         <p class="text-center mt-4 small">¿No tienes una cuenta? <a class="lila" href="registro.php">Regístrate</a></p>

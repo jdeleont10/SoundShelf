@@ -54,7 +54,7 @@ include "includes/encabezado.php";
             <div class="caja text-center">
                 <p class="subtitulo-chico">EMPIEZA TU COLECCIÓN</p>
                 <h3>Todavía no tienes favoritos</h3>
-                <p class="texto-suave">Pulsa ♡ Favoritos en cualquier canción del catálogo y aparecerá aquí.</p>
+                <p class="texto-suave">Pulsa Favoritos en cualquier canción del catálogo y aparecerá aquí.</p>
                 <a class="btn btn-lila" href="lista.html">Explorar el catálogo</a>
             </div>
         <?php } else { ?>

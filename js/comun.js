@@ -6,7 +6,7 @@ function pintarMenu(sesion) {
     let html = "";
 
     if (sesion.nombre != "") {
-        html += '<li class="nav-item"><a class="nav-link" href="mis-favoritos.php">Mis favoritos <span class="badge contador">♥ ' + sesion.favoritos.length + '</span></a></li>';
+        html += '<li class="nav-item"><a class="nav-link" href="mis-favoritos.php">Mis favoritos <span class="badge contador">' + sesion.favoritos.length + '</span></a></li>';
         html += '<li class="nav-item"><span class="navbar-text ms-lg-3" id="nombre-usuario"></span></li>';
         html += '<li class="nav-item"><a class="btn btn-outline-light btn-sm ms-lg-3" href="salir.php">Cerrar sesión</a></li>';
     } else {
@@ -41,7 +41,7 @@ function tarjeta(cancion, favoritos) {
     html += '<div class="card-body">';
     html += '<div class="d-flex justify-content-between mb-2">';
     html += '<span class="badge etiqueta">' + cancion.genero + '</span>';
-    html += '<span class="estrella">★ ' + cancion.puntuacion + '</span>';
+    html += '<span class="estrella">' + cancion.puntuacion + ' / 10</span>';
     html += '</div>';
     html += '<h5 class="card-title"><a href="' + ficha + '">' + cancion.titulo + '</a></h5>';
     html += '<p class="artista mb-1">' + cancion.artista + '</p>';
@@ -51,17 +51,17 @@ function tarjeta(cancion, favoritos) {
     html += '<form action="favoritos.php" method="post" class="d-inline">';
     html += '<input type="hidden" name="cancion" value="' + cancion.id + '">';
     if (esFavorita) {
-        html += '<button type="submit" class="btn btn-sm boton-favorito marcado">♥ Favorita</button>';
+        html += '<button type="submit" class="btn btn-sm boton-favorito marcado">Favorita</button>';
     } else {
-        html += '<button type="submit" class="btn btn-sm boton-favorito">♡ Favoritos</button>';
+        html += '<button type="submit" class="btn btn-sm boton-favorito">Favoritos</button>';
     }
     html += '</form> ';
-    html += '<a class="btn btn-sm btn-spotify" href="' + cancion.spotify + '" target="_blank">▶ Escuchar</a>';
+    html += '<a class="btn btn-sm btn-spotify" href="' + cancion.spotify + '" target="_blank">Escuchar</a>';
     html += '</div>';
 
     html += '<div class="card-footer d-flex justify-content-between small">';
     html += '<span class="texto-suave">' + cancion.duracion + ' · ' + cancion.anio + '</span>';
-    html += '<a class="lila" href="' + ficha + '">Explorar ↗</a>';
+    html += '<a class="lila" href="' + ficha + '">Explorar</a>';
     html += '</div>';
     html += '</div>';
     html += '</div>';

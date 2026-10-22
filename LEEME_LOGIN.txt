@@ -20,7 +20,7 @@ ACCESO
 
 FAVORITOS
 - Los favoritos se guardan en la tabla favoritos de MySQL (página Mis favoritos).
-- Se agregan o quitan con el botón ♥ de cada canción.
+- Se agregan o quitan con el botón Favoritos de cada canción.
 
 SEGURIDAD
 - Contraseñas cifradas con password_hash / password_verify.

@@ -85,8 +85,8 @@ function mostrarTabla(canciones) {
         html += '<td>' + c.album + '</td>';
         html += '<td>' + c.duracion + '</td>';
         html += '<td>' + c.anio + '</td>';
-        html += '<td class="estrella">★ ' + c.puntuacion + '</td>';
-        html += '<td><a class="btn btn-sm btn-outline-light" href="detalle.html?id=' + c.id + '">Ver ficha ↗</a></td>';
+        html += '<td class="estrella">' + c.puntuacion + ' / 10</td>';
+        html += '<td><a class="btn btn-sm btn-outline-light" href="detalle.html?id=' + c.id + '">Ver ficha</a></td>';
         html += '</tr>';
     }
     document.getElementById("filas-tabla").innerHTML = html;

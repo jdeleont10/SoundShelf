@@ -93,7 +93,7 @@ include "includes/encabezado.php";
             <input type="password" id="confirmacion" name="confirmacion" class="form-control" minlength="8" required oninput="revisarClave()">
             <p id="coincidencia-clave" class="ayuda-clave mb-3"></p>
 
-            <button type="submit" class="btn btn-lila w-100">Crear cuenta ↗</button>
+            <button type="submit" class="btn btn-lila w-100">Crear cuenta</button>
         </form>
 
         <p class="text-center mt-4 small">¿Ya tienes cuenta? <a class="lila" href="login.php">Inicia sesión</a></p>

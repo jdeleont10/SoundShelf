@@ -29,8 +29,8 @@ function mostrarDestacada(datos) {
         html += '<img src="' + principal.imagen + '" alt="Portada de ' + principal.album + '" onerror="this.src=\'' + principal.respaldo + '\'">';
         html += '<div class="destacada-texto">';
         html += '<span class="badge etiqueta">DESTACADO</span>';
-        html += '<span class="estrella float-end">★ ' + principal.puntuacion + '</span>';
-        html += '<h2 class="mt-3">' + principal.titulo + ' ↗</h2>';
+        html += '<span class="estrella float-end">' + principal.puntuacion + ' / 10</span>';
+        html += '<h2 class="mt-3">' + principal.titulo + '</h2>';
         html += '<p>' + principal.artista + ' · ' + principal.album + '</p>';
         html += '</div>';
         html += '</a>';
@@ -39,7 +39,7 @@ function mostrarDestacada(datos) {
         html += '<div class="destacada">';
         html += '<img src="' + principal.imagen + '" alt="" class="borrosa" onerror="this.src=\'' + principal.respaldo + '\'">';
         html += '<div class="destacada-bloqueada">';
-        html += '<p class="candado">🔒</p>';
+        html += '';
         html += '<h2>Inicia sesión para escuchar</h2>';
         html += '<p>Crea una cuenta gratis y descubre las ' + datos.totalCanciones + ' canciones del catálogo.</p>';
         html += '<div><a class="btn btn-lila" href="login.php">Iniciar sesión</a>';
@@ -90,7 +90,7 @@ function mostrarGeneros(datos) {
         html += '<div class="col">';
         html += '<a class="card tarjeta-genero h-100" href="lista.html?genero=' + genero.id + '">';
         html += '<div class="card-body">';
-        html += '<p class="lila small">' + cantidad + ' ↗</p>';
+        html += '<p class="lila small">' + cantidad + '</p>';
         html += '<h5>' + genero.nombre + '</h5>';
         html += '<p class="texto-suave small mb-0">' + genero.descripcion + '</p>';
         html += '</div>';

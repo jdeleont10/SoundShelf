@@ -2,7 +2,7 @@
 // Encabezado de todas las páginas. Antes de incluirlo, cada página pone el $titulo.
 
 // Lista con los id de las canciones favoritas del usuario.
-// Sirve para el contador del menú y para saber qué botones ♥ van marcados.
+// Sirve para el contador del menú y para saber qué botones de favoritos van marcados.
 $misFavoritos = array();
 if (isset($_SESSION["usuario_id"])) {
     $consulta = mysqli_prepare($conexion, "SELECT cancion_id FROM favoritos WHERE usuario_id = ?");
@@ -22,7 +22,7 @@ if (isset($_SESSION["usuario_id"])) {
     <title><?php echo $titulo; ?> | SoundShelf</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="estilos.css">
+    <link rel="stylesheet" href="estilos.css?v=2">
 </head>
 <body>
 
@@ -41,7 +41,7 @@ if (isset($_SESSION["usuario_id"])) {
                 <li class="nav-item"><a class="nav-link" href="lista.html">Catálogo</a></li>
                 <li class="nav-item"><a class="nav-link" href="index.html#generos">Géneros</a></li>
                 <?php if (isset($_SESSION["usuario_id"])) { ?>
-                    <li class="nav-item"><a class="nav-link" href="mis-favoritos.php">Mis favoritos <span class="badge contador">♥ <?php echo count($misFavoritos); ?></span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="mis-favoritos.php">Mis favoritos <span class="badge contador"><?php echo count($misFavoritos); ?></span></a></li>
                     <li class="nav-item"><span class="navbar-text ms-lg-3">Hola, <?php echo htmlspecialchars($_SESSION["usuario_nombre"]); ?></span></li>
                     <li class="nav-item"><a class="btn btn-outline-light btn-sm ms-lg-3" href="salir.php">Cerrar sesión</a></li>
                 <?php } else { ?>

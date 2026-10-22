@@ -19,7 +19,7 @@ CÓMO FUNCIONA
   js/comun.js tiene lo que comparten: el menú y la tarjeta de canción.
 - Páginas PHP (procesan formularios o necesitan la sesión):
   login.php, registro.php, salir.php, mis-favoritos.php
-  favoritos.php  agrega o quita una canción de favoritos (lo llama el botón ♥)
+  favoritos.php  agrega o quita una canción de favoritos (lo llama el botón Favoritos)
 - includes/: conexión, funciones, encabezado, pie de página y la tarjeta de canción.
 - estilos.css: colores propios; el resto del diseño es de Bootstrap (tema oscuro).
 - script.js: efectos con JavaScript (saludo por hora, barra de progreso, botón Arriba,
