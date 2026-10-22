@@ -56,7 +56,8 @@ function tarjeta(cancion, favoritos) {
         html += '<button type="submit" class="btn btn-sm boton-favorito">Favoritos</button>';
     }
     html += '</form> ';
-    html += '<a class="btn btn-sm btn-spotify" href="' + cancion.spotify + '" target="_blank">Escuchar</a>';
+    // Botón Escuchar: carga la canción en el reproductor de Spotify de abajo (función en script.js)
+    html += '<button type="button" class="btn btn-sm btn-spotify" onclick="reproducir(\'' + cancion.spotify_id + '\')">Escuchar</button>';
     html += '</div>';
 
     html += '<div class="card-footer d-flex justify-content-between small">';

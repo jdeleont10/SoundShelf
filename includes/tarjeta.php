@@ -26,7 +26,8 @@
                     <button type="submit" class="btn btn-sm boton-favorito">Favoritos</button>
                 <?php } ?>
             </form>
-            <a class="btn btn-sm btn-spotify" href="<?php echo enlaceSpotify($cancion); ?>" target="_blank">Escuchar</a>
+            <!-- Botón Escuchar: carga la canción en el reproductor de Spotify de abajo (función en script.js) -->
+            <button type="button" class="btn btn-sm btn-spotify" onclick="reproducir('<?php echo $cancion["spotify_id"]; ?>')">Escuchar</button>
         </div>
         <div class="card-footer d-flex justify-content-between small">
             <span class="texto-suave"><?php echo formatearDuracion($cancion["duracion_segundos"]); ?> · <?php echo $cancion["anio"]; ?></span>

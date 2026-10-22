@@ -178,6 +178,13 @@ h2 {
     opacity: 0.85;
 }
 
+/* Que el botón de Spotify siga verde después de tocarlo */
+.btn-spotify:focus,
+.btn-spotify:active {
+    background-color: #1db954;
+    color: white;
+}
+
 /* ---------- Secciones y cajas ---------- */
 
 .portada {
@@ -463,9 +470,33 @@ a.destacada:hover img {
 #boton-arriba {
     position: fixed;
     right: 20px;
-    bottom: 20px;
+    bottom: 110px; /* arriba de la barra del reproductor */
     display: none;
     z-index: 2000;
+}
+
+/* Barra del reproductor de Spotify, fija abajo de la pantalla.
+   Empieza escondida; script.js la muestra al tocar "Escuchar". */
+.reproductor {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 90px;
+    padding: 5px 16px;
+    align-items: center;
+    gap: 12px;
+    background-color: #13142a;
+    border-top: 1px solid #302e52;
+    z-index: 1500;
+}
+
+.reproductor iframe {
+    flex: 1;
+    height: 80px;
+    border: none;
+    border-radius: 12px;
 }
 
 /* ---------- Celulares ---------- */

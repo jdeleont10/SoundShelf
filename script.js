@@ -132,5 +132,23 @@ function copiarEnlace() {
     }, 2000);
 }
 
+// 7. Reproductor de abajo: al tocar "Escuchar" se carga
+// el reproductor de Spotify con esa canción.
+function reproducir(spotifyId) {
+    let reproductor = document.getElementById("reproductor");
+    let iframe = document.getElementById("reproductor-spotify");
+
+    iframe.src = "https://open.spotify.com/embed/track/" + spotifyId + "?theme=0";
+    reproductor.style.display = "flex";
+}
+
+function cerrarReproductor() {
+    let reproductor = document.getElementById("reproductor");
+    let iframe = document.getElementById("reproductor-spotify");
+
+    iframe.src = "";
+    reproductor.style.display = "none";
+}
+
 // Al cargar la página se muestra el saludo.
 mostrarSaludo();

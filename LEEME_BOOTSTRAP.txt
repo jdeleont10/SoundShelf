@@ -23,12 +23,18 @@ CÓMO FUNCIONA
 - includes/: conexión, funciones, encabezado, pie de página y la tarjeta de canción.
 - estilos.css: colores propios; el resto del diseño es de Bootstrap (tema oscuro).
 - script.js: efectos con JavaScript (saludo por hora, barra de progreso, botón Arriba,
-  mostrar contraseña, nivel de contraseña y copiar enlace).
+  mostrar contraseña, nivel de contraseña, copiar enlace) y el reproductor de abajo.
+
+REPRODUCTOR
+- Al tocar "Escuchar" (o "Spotify" en la ficha), abajo aparece el reproductor oficial de Spotify
+  (open.spotify.com/embed/track/<id>) con esa canción.
+- El id de cada canción está en la columna spotify_id de la tabla canciones.
+- Sin cuenta de Spotify suena una muestra de 30 segundos; con sesión en Spotify, completa.
 
 BASE DE DATOS (soundshelf)
-- generos (5) -> canciones (20): un género tiene muchas canciones.
+- generos (5) -> canciones (60): un género tiene muchas canciones.
 - usuarios <-> canciones a través de favoritos: muchos a muchos.
 
 REQUIERE INTERNET
-Bootstrap y las portadas de los álbumes se cargan desde internet.
+Bootstrap, las portadas y el reproductor de Spotify se cargan desde internet.
 Si una portada no carga, se muestra una ilustración del género (assets/img).

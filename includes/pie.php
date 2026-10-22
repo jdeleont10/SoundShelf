@@ -15,10 +15,16 @@
     </div>
 </footer>
 
+<!-- Reproductor de Spotify de abajo (aparece al tocar Escuchar, lo controla script.js) -->
+<div class="reproductor" id="reproductor">
+    <iframe id="reproductor-spotify" title="Reproductor de Spotify" allow="autoplay; clipboard-write; encrypted-media"></iframe>
+    <button type="button" class="btn btn-sm btn-outline-light" onclick="cerrarReproductor()">Cerrar</button>
+</div>
+
 <!-- Botón para volver arriba (aparece al bajar, lo controla script.js) -->
 <button type="button" id="boton-arriba" class="btn btn-lila" onclick="irArriba()">Arriba</button>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js?v=2"></script>
+<script src="script.js?v=3"></script>
 </body>
 </html>

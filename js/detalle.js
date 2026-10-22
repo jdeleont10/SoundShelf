@@ -81,7 +81,7 @@ function mostrarFicha(datos) {
     html += '<button type="button" id="boton-copiar" class="btn btn-outline-light mb-2" onclick="copiarEnlace()">Copiar enlace</button>';
 
     html += '<p class="subtitulo-chico mt-4">ESCÚCHALA EN</p>';
-    html += '<a class="btn btn-spotify mb-2 me-1" href="' + c.spotify + '" target="_blank">Spotify</a>';
+    html += '<button type="button" class="btn btn-spotify mb-2 me-1" onclick="reproducir(\'' + c.spotify_id + '\')">Spotify</button>';
     html += '<a class="btn btn-youtube mb-2 me-1" href="' + c.youtube + '" target="_blank">YouTube</a>';
     if (c.enlace_apple != "") {
         html += '<a class="btn btn-apple mb-2" href="' + c.enlace_apple + '" target="_blank">Apple Music</a>';
