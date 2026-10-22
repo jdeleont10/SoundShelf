@@ -186,6 +186,49 @@ VALUES
     (59, 5, 'Al Taller del Maestro', 'Un clásico en una nueva versión.', 'Nueva versión de la canción más conocida de Alex Campos, ahora con Jesús Adrián Romero y Lilly Goodman. Habla de dejar que Dios repare el corazón.', 'Alex Campos, Jesús Adrián Romero, Lilly Goodman', 'Al Taller del Maestro', 2022, 325, 9.1, 'https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b2737d8ea59453720d870624b0e5', '', '7Eyk7Fpn04yhOYppojynnA'),
     (60, 5, 'Yo Seré Tu Sol', 'Pop y rap en una misma canción.', 'Una mezcla del rap de Redimi2 con las voces de Tercer Cielo, uno de los grupos de pop cristiano más conocidos en español.', 'Redimi2, Tercer Cielo', 'Phenomenon Edition', 2009, 212, 8.7, 'https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273c26d6c55532f7d353d2a82c9', '', '1BuEp7Gt4hdzKwNaZIxMfI');
 
+-- Enlace de Apple Music de las canciones 21 a 60 (las 20 primeras ya lo traen en su INSERT).
+-- Se eligió en cada caso la versión que dura lo mismo que la canción guardada.
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/yo-soy-la-ofrenda-live/1852606136?i=1852606137' WHERE id = 21;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/praise-feat-brandon-lake-chris-brown-chandler-moore/1731471415?i=1731471423' WHERE id = 22;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/battle-belongs/1566041335?i=1566041336' WHERE id = 23;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/raise-a-hallelujah-studio-version/1747841331?i=1747841332' WHERE id = 24;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/alive-live/1829981085?i=1829981099' WHERE id = 25;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/enciende-una-luz/1398679239?i=1398679240' WHERE id = 26;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/gloria-en-lo-alto/1321567767?i=1321568111' WHERE id = 27;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/mi-libertador/1515559441?i=1515559442' WHERE id = 28;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/what-a-beautiful-name-feat-hillsong-young-free/1786284955?i=1786284966' WHERE id = 29;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/the-blessing-live/1503421628?i=1503421630' WHERE id = 30;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/renue-vame-feat-marcos-witt-en-vivo/6799164268?i=6799164713' WHERE id = 31;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/te-dar%C3%A9-lo-mejor-en-vivo/1603412053?i=1603412378' WHERE id = 32;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/jireh-feat-chandler-moore-naomi-raine/1557087895?i=1557087898' WHERE id = 33;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/believe-for-it/1583644927?i=1583644930' WHERE id = 34;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/ya-no-soy-esclavo-feat-julio-melgar/1424583125?i=1424584335' WHERE id = 35;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/t%C3%BA-proveer%C3%A1s/1677845465?i=1677845663' WHERE id = 36;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/cant-steal-my-joy-feat-brandon-lake/1818407230?i=1818407508' WHERE id = 37;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/my-promised-land/1779547999?i=1779548023' WHERE id = 38;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/my-lighthouse/1792039779?i=1792039786' WHERE id = 39;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/build-your-kingdom-here/1794637147?i=1794637153' WHERE id = 40;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/white-owl/1776014623?i=1776014626' WHERE id = 41;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/is-he-worthy/1560396233?i=1560396835' WHERE id = 42;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/find-you-here/1192615067?i=1192615167' WHERE id = 43;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/old-church-choir/1282111719?i=1282112387' WHERE id = 44;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/el-nombre-de-jes%C3%BAs/1823787454?i=1823787462' WHERE id = 45;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/esp%C3%ADritu-santo/1823785637?i=1823786014' WHERE id = 46;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/pentagrama/1685959184?i=1685959399' WHERE id = 47;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/a-pesar-de-m%C3%AD-feat-un-coraz%C3%B3n-abby-valdez-indiomar/1656783120?i=1656784849' WHERE id = 48;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/eres-mi-bendici%C3%B3n-feat-alex-zurdo/1041052528?i=1041052532' WHERE id = 49;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/blessings-feat-ty-dolla-%24ign/1812456438?i=1812456832' WHERE id = 50;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/you-cant-stop-me/1533128905?i=1533129591' WHERE id = 51;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/alabar%C3%A9/1805178951?i=1805179708' WHERE id = 52;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/your-ways-better/1800088490?i=1800088968' WHERE id = 53;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/indudablemente/906478006?i=906478024' WHERE id = 54;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/god-only-knows/1398353335?i=1398353598' WHERE id = 55;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/you-say/1447184494?i=1447184844' WHERE id = 56;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/who-am-i/269440887?i=269441279' WHERE id = 57;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/hero/668424099?i=668424100' WHERE id = 58;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/al-taller-del-maestro/1888262252?i=1888262253' WHERE id = 59;
+UPDATE canciones SET enlace_apple = 'https://music.apple.com/us/album/yo-ser%C3%A9-tu-sol-feat-tercer-cielo/1823785109?i=1823785116' WHERE id = 60;
+
 -- CONSULTA 1: listar todos los géneros en orden alfabético.
 SELECT id, nombre, descripcion
 FROM generos

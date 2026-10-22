@@ -22,7 +22,7 @@ if (isset($_SESSION["usuario_id"])) {
     <title><?php echo $titulo; ?> | SoundShelf</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="estilos.css?v=5">
+    <link rel="stylesheet" href="estilos.css?v=6">
 </head>
 <body>
 

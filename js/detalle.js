@@ -69,8 +69,9 @@ function mostrarFicha(datos) {
     html += '<p class="texto-suave">' + e(c.subtitulo) + '</p>';
     html += '<p class="small">' + e(c.artista) + ' · ' + c.anio + '</p>';
 
-    // Botón de favoritos: envía el id de la canción a favoritos.php
-    html += '<form action="favoritos.php" method="post" class="mb-3">';
+    // Botón de favoritos (envía el id de la canción a favoritos.php) y botón Escuchar.
+    html += '<div class="mb-3">';
+    html += '<form action="favoritos.php" method="post" class="d-inline">';
     html += '<input type="hidden" name="cancion" value="' + c.id + '">';
     html += '<input type="hidden" name="token" value="' + tokenSesion + '">';
     html += '<input type="hidden" name="volver" value="' + e(paginaActual()) + '">';
@@ -79,17 +80,21 @@ function mostrarFicha(datos) {
     } else {
         html += '<button type="submit" class="btn boton-favorito">Favoritos</button>';
     }
-    html += '</form>';
+    html += '</form> ';
+    // Escuchar: carga la canción en el reproductor de Spotify de abajo (función en script.js), igual que en las tarjetas.
+    html += '<button type="button" class="btn btn-spotify" onclick="reproducir(\'' + c.spotify_id + '\')">Escuchar</button>';
+    html += '</div>';
 
     html += '<a class="btn btn-lila mb-2 me-1" href="' + enlaceGenero + '">Más de ' + e(c.genero) + '</a>';
     html += '<a class="btn btn-outline-light mb-2 me-1" href="lista.html">Volver al catálogo</a>';
     html += '<button type="button" id="boton-copiar" class="btn btn-outline-light mb-2" onclick="copiarEnlace()">Copiar enlace</button>';
 
     html += '<p class="subtitulo-chico mt-4">ESCÚCHALA EN</p>';
-    html += '<button type="button" class="btn btn-spotify mb-2 me-1" onclick="reproducir(\'' + c.spotify_id + '\')">Spotify</button>';
-    html += '<a class="btn btn-youtube mb-2 me-1" href="' + e(c.youtube) + '" target="_blank">YouTube</a>';
+    // Estos tres abren la canción en su sitio, en una pestaña nueva.
+    html += '<a class="btn btn-spotify mb-2 me-1" href="https://open.spotify.com/track/' + e(c.spotify_id) + '" target="_blank" rel="noopener">Spotify</a>';
+    html += '<a class="btn btn-youtube mb-2 me-1" href="' + e(c.youtube) + '" target="_blank" rel="noopener">YouTube</a>';
     if (c.enlace_apple != "") {
-        html += '<a class="btn btn-apple mb-2" href="' + e(c.enlace_apple) + '" target="_blank">Apple Music</a>';
+        html += '<a class="btn btn-apple mb-2" href="' + e(c.enlace_apple) + '" target="_blank" rel="noopener">Apple Music</a>';
     }
     html += '</div>';
     html += '<div class="col-lg-6 mt-4 mt-lg-0">';
