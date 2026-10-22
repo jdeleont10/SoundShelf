@@ -25,6 +25,6 @@
 <button type="button" id="boton-arriba" class="btn btn-lila" onclick="irArriba()">Arriba</button>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script.js?v=4"></script>
+<script src="script.js?v=5"></script>
 </body>
 </html>
