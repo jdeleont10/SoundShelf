@@ -29,7 +29,8 @@ if (isset($_SESSION["usuario_id"])) {
 <!-- Barra que se llena al bajar por la página (la mueve script.js) -->
 <div id="barra-progreso"></div>
 
-<nav class="navbar navbar-expand-lg sticky-top menu">
+<header class="sticky-top">
+<nav class="navbar navbar-expand-lg menu">
     <div class="container">
         <a class="navbar-brand marca" href="index.html">SoundShelf<span class="lila">.</span></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
@@ -52,3 +53,4 @@ if (isset($_SESSION["usuario_id"])) {
         </div>
     </div>
 </nav>
+</header>

@@ -36,7 +36,7 @@ function tarjeta(cancion, favoritos) {
 
     let html = "";
     html += '<div class="col">';
-    html += '<div class="card tarjeta h-100">';
+    html += '<article class="card tarjeta h-100">';
     html += '<a href="' + ficha + '"><img src="' + cancion.imagen + '" class="card-img-top" alt="Portada de ' + cancion.album + '" onerror="this.src=\'' + cancion.respaldo + '\'"></a>';
     html += '<div class="card-body">';
     html += '<div class="d-flex justify-content-between mb-2">';
@@ -64,7 +64,7 @@ function tarjeta(cancion, favoritos) {
     html += '<span class="texto-suave">' + cancion.duracion + ' · ' + cancion.anio + '</span>';
     html += '<a class="lila" href="' + ficha + '">Explorar</a>';
     html += '</div>';
-    html += '</div>';
+    html += '</article>';
     html += '</div>';
     return html;
 }

@@ -4,7 +4,7 @@
 //   $misFavoritos  los id de las canciones favoritas del usuario
 ?>
 <div class="col">
-    <div class="card tarjeta h-100">
+    <article class="card tarjeta h-100">
         <a href="detalle.html?id=<?php echo $cancion["id"]; ?>">
             <img src="<?php echo $cancion["imagen"]; ?>" class="card-img-top" alt="Portada de <?php echo htmlspecialchars($cancion["album"]); ?>" onerror="this.src='<?php echo portadaRespaldo($cancion["genero_id"]); ?>'">
         </a>
@@ -33,5 +33,5 @@
             <span class="texto-suave"><?php echo formatearDuracion($cancion["duracion_segundos"]); ?> · <?php echo $cancion["anio"]; ?></span>
             <a class="lila" href="detalle.html?id=<?php echo $cancion["id"]; ?>">Explorar</a>
         </div>
-    </div>
+    </article>
 </div>

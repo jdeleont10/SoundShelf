@@ -56,6 +56,9 @@ function mostrarFicha(datos) {
     let html = "";
     html += '<p class="migas"><a href="index.html">Inicio</a> / <a href="lista.html">Catálogo</a> / ' + c.titulo + '</p>';
 
+    // La ficha de la canción va dentro de un <article>.
+    html += '<article>';
+
     // Parte de arriba: datos principales y portada.
     html += '<section class="row align-items-center seccion-chica">';
     html += '<div class="col-lg-6">';
@@ -113,6 +116,7 @@ function mostrarFicha(datos) {
     html += '</div>';
     html += '</div>';
     html += '</section>';
+    html += '</article>';
 
     // Canciones relacionadas.
     html += '<section class="seccion">';
