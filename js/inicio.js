@@ -26,18 +26,18 @@ function mostrarDestacada(datos) {
     if (datos.sesion.nombre != "") {
         // Con sesión: la portada con su título y un enlace a la ficha.
         html += '<a href="detalle.html?id=' + principal.id + '" class="destacada">';
-        html += '<img src="' + principal.imagen + '" alt="Portada de ' + principal.album + '" onerror="this.src=\'' + principal.respaldo + '\'">';
+        html += '<img src="' + e(principal.imagen) + '" alt="Portada de ' + e(principal.album) + '" onerror="this.src=\'' + e(principal.respaldo) + '\'">';
         html += '<div class="destacada-texto">';
         html += '<span class="badge etiqueta">DESTACADO</span>';
         html += '<span class="estrella float-end">' + principal.puntuacion + ' / 10</span>';
-        html += '<h2 class="mt-3">' + principal.titulo + '</h2>';
-        html += '<p>' + principal.artista + ' · ' + principal.album + '</p>';
+        html += '<h2 class="mt-3">' + e(principal.titulo) + '</h2>';
+        html += '<p>' + e(principal.artista) + ' · ' + e(principal.album) + '</p>';
         html += '</div>';
         html += '</a>';
     } else {
         // Sin sesión: la portada se ve borrosa y encima va el aviso.
         html += '<div class="destacada">';
-        html += '<img src="' + principal.imagen + '" alt="" class="borrosa" onerror="this.src=\'' + principal.respaldo + '\'">';
+        html += '<img src="' + e(principal.imagen) + '" alt="" class="borrosa" onerror="this.src=\'' + e(principal.respaldo) + '\'">';
         html += '<div class="destacada-bloqueada">';
         html += '';
         html += '<h2>Inicia sesión para escuchar</h2>';
@@ -91,8 +91,8 @@ function mostrarGeneros(datos) {
         html += '<a class="card tarjeta-genero h-100" href="lista.html?genero=' + genero.id + '">';
         html += '<div class="card-body">';
         html += '<p class="lila small">' + cantidad + '</p>';
-        html += '<h5>' + genero.nombre + '</h5>';
-        html += '<p class="texto-suave small mb-0">' + genero.descripcion + '</p>';
+        html += '<h5>' + e(genero.nombre) + '</h5>';
+        html += '<p class="texto-suave small mb-0">' + e(genero.descripcion) + '</p>';
         html += '</div>';
         html += '</a>';
         html += '</div>';

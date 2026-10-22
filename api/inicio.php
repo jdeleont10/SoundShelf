@@ -1,7 +1,7 @@
 <?php
 // Datos para index.html: cifras, canciones destacadas y géneros.
 // Responde en JSON (lo lee js/inicio.js con fetch).
-session_start();
+include "../includes/sesion.php";
 include "../includes/conexion.php";
 include "../includes/funciones.php";
 
@@ -25,7 +25,12 @@ $resultado = mysqli_query($conexion, "SELECT c.*, g.nombre AS genero
                                       LIMIT 3");
 $respuesta["destacadas"] = array();
 while ($fila = mysqli_fetch_assoc($resultado)) {
-    $respuesta["destacadas"][] = prepararCancion($fila);
+    if (isset($_SESSION["usuario_id"])) {
+        $respuesta["destacadas"][] = prepararCancion($fila);
+    } else {
+        // Sin sesión solo se manda la portada (se muestra borrosa).
+        $respuesta["destacadas"][] = array("imagen" => $fila["imagen"], "respaldo" => portadaRespaldo($fila["genero_id"]));
+    }
 }
 
 // Los géneros con cuántas canciones tiene cada uno.

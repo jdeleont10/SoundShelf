@@ -1,7 +1,7 @@
 <?php
 // Datos para detalle.html: una canción y otras parecidas.
 // Ejemplo: api/detalle.php?id=1
-session_start();
+include "../includes/sesion.php";
 include "../includes/conexion.php";
 include "../includes/funciones.php";
 

@@ -20,6 +20,8 @@
             <!-- Botón de favoritos: envía el id de la canción a favoritos.php -->
             <form action="favoritos.php" method="post" class="d-inline">
                 <input type="hidden" name="cancion" value="<?php echo $cancion["id"]; ?>">
+                <input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>">
+                <input type="hidden" name="volver" value="<?php echo htmlspecialchars(basename($_SERVER["REQUEST_URI"])); ?>">
                 <?php if (in_array($cancion["id"], $misFavoritos)) { ?>
                     <button type="submit" class="btn btn-sm boton-favorito marcado">Favorita</button>
                 <?php } else { ?>

@@ -18,7 +18,7 @@ fetch("api/lista.php?q=" + encodeURIComponent(q) + "&genero=" + genero + "&orden
     .then(function (datos) {
         // Sin sesión no se puede ver el catálogo.
         if (datos.necesitaLogin) {
-            window.location.href = "login.php?aviso=1";
+            irAlLogin();
             return;
         }
         pintarMenu(datos.sesion);
@@ -35,9 +35,9 @@ function mostrarGeneros(generos) {
     let html = '<option value="0">Todos los géneros</option>';
     for (let i = 0; i < generos.length; i++) {
         if (generos[i].id == genero) {
-            html += '<option value="' + generos[i].id + '" selected>' + generos[i].nombre + '</option>';
+            html += '<option value="' + generos[i].id + '" selected>' + e(generos[i].nombre) + '</option>';
         } else {
-            html += '<option value="' + generos[i].id + '">' + generos[i].nombre + '</option>';
+            html += '<option value="' + generos[i].id + '">' + e(generos[i].nombre) + '</option>';
         }
     }
     document.getElementById("genero").innerHTML = html;
@@ -80,9 +80,9 @@ function mostrarTabla(canciones) {
     for (let i = 0; i < canciones.length; i++) {
         let c = canciones[i];
         html += '<tr>';
-        html += '<td><strong>' + c.titulo + '</strong><br><span class="texto-suave small">' + c.artista + '</span></td>';
-        html += '<td>' + c.genero + '</td>';
-        html += '<td>' + c.album + '</td>';
+        html += '<td><strong>' + e(c.titulo) + '</strong><br><span class="texto-suave small">' + e(c.artista) + '</span></td>';
+        html += '<td>' + e(c.genero) + '</td>';
+        html += '<td>' + e(c.album) + '</td>';
         html += '<td>' + c.duracion + '</td>';
         html += '<td>' + c.anio + '</td>';
         html += '<td class="estrella">' + c.puntuacion + ' / 10</td>';

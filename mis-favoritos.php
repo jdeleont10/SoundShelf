@@ -1,12 +1,12 @@
 <?php
 // Mis favoritos: las canciones que el usuario guardó en su cuenta.
-session_start();
+include "includes/sesion.php";
 include "includes/conexion.php";
 include "includes/funciones.php";
 
 // Solo se puede ver con sesión.
 if (!isset($_SESSION["usuario_id"])) {
-    header("Location: login.php?aviso=1");
+    header("Location: login.php?aviso=1&volver=mis-favoritos.php");
     exit;
 }
 

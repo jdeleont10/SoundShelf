@@ -18,6 +18,15 @@ CREATE TABLE IF NOT EXISTS favoritos (
   CONSTRAINT fk_favoritos_cancion FOREIGN KEY (cancion_id) REFERENCES canciones(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Intentos fallidos de inicio de sesión: después de 5 en 15 minutos, ese correo queda bloqueado.
+CREATE TABLE IF NOT EXISTS intentos_login (
+  id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  correo VARCHAR(190) NOT NULL,
+  ip VARCHAR(45) NOT NULL DEFAULT '',
+  creado_en TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_intentos_correo (correo, creado_en)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- Datos de ejemplo: 5 usuarios (contraseña de todos: Ejemplo123!) y 10 favoritos.
 -- INSERT IGNORE no duplica nada si se vuelve a importar.
 INSERT IGNORE INTO usuarios (nombre, correo, clave_hash) VALUES

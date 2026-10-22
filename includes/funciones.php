@@ -53,6 +53,7 @@ function datosSesion($conexion)
     $sesion = array();
     $sesion["nombre"] = "";
     $sesion["favoritos"] = array();
+    $sesion["token"] = $_SESSION["token"]; // para los formularios que arma JavaScript
 
     if (isset($_SESSION["usuario_id"])) {
         $sesion["nombre"] = $_SESSION["usuario_nombre"];

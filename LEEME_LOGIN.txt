@@ -25,7 +25,12 @@ FAVORITOS
 SEGURIDAD
 - Contraseñas cifradas con password_hash / password_verify.
 - Consultas preparadas con mysqli (evita inyección SQL).
-- htmlspecialchars al mostrar datos (evita que se meta código en la página).
-- Es un proyecto de clase: para publicarlo en internet faltaría HTTPS, token CSRF en los
-  formularios, límite de intentos de login, un usuario de MySQL con contraseña
-  y recuperación de contraseña.
+- htmlspecialchars (PHP) y e() (JavaScript) al mostrar datos: evitan que se meta código en la página.
+- includes/sesion.php: cookie de sesión protegida, cierre por 30 minutos sin actividad
+  y un token en cada formulario (favoritos, login, registro y cerrar sesión).
+- Límite de intentos: después de 5 contraseñas equivocadas, ese correo queda bloqueado 15 minutos
+  (tabla intentos_login, que crea usuarios.sql).
+- Al iniciar sesión se cambia el id de la sesión y se vuelve a la página que se quería ver.
+- Los errores de PHP no se muestran en la página (quedan en el log de XAMPP).
+- Es un proyecto de clase: para publicarlo en internet faltaría HTTPS, un usuario de MySQL
+  con contraseña y recuperación de contraseña.

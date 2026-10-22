@@ -1,7 +1,7 @@
 <?php
 // Datos para lista.html: canciones del catálogo con búsqueda, filtro por género y orden.
 // Ejemplo: api/lista.php?q=montesanto&genero=1&orden=puntuacion
-session_start();
+include "../includes/sesion.php";
 include "../includes/conexion.php";
 include "../includes/funciones.php";
 
@@ -18,7 +18,7 @@ $respuesta["sesion"] = datosSesion($conexion);
 
 // Lo que el usuario eligió en el formulario (o los valores por defecto).
 $q = "";
-if (isset($_GET["q"])) {
+if (isset($_GET["q"]) && is_string($_GET["q"])) {
     $q = trim($_GET["q"]);
 }
 
@@ -28,12 +28,13 @@ if (isset($_GET["genero"])) {
 }
 
 $orden = "titulo";
-if (isset($_GET["orden"])) {
+if (isset($_GET["orden"]) && is_string($_GET["orden"])) {
     $orden = $_GET["orden"];
 }
 
 // El orden se elige de una lista fija, así nadie puede meter otra cosa en el SQL.
-$ordenSql = "c.titulo";
+// Al ordenar por título se ignoran los signos ¿ y ¡ del inicio, así "¿Sabes?" queda en la S.
+$ordenSql = "REPLACE(REPLACE(c.titulo, '¿', ''), '¡', '')";
 if ($orden == "puntuacion") {
     $ordenSql = "c.puntuacion DESC";
 }
